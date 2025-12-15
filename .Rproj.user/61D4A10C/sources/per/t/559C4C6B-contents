@@ -1,0 +1,4482 @@
+
+           ___      .______        ______  __    __  .______      
+          /   \     |   _  \      /      ||  |  |  | |   _  \     
+         /  ^  \    |  |_)  |    |  ,----'|  |__|  | |  |_)  |    
+        /  /_\  \   |      /     |  |     |   __   | |      /     
+       /  _____  \  |  |\  \\___ |  `----.|  |  |  | |  |\  \\___.
+      /__/     \__\ | _| `._____| \______||__|  |__| | _| `._____|
+    
+Logging With ArchR!
+
+Start Time : 2025-12-13 12:21:52.979369
+
+------- ArchR Info
+
+ArchRThreads = 6
+ArchRGenome = Hg38
+
+------- System Info
+
+Computer OS = unix
+
+------- Session Info
+
+R version 4.4.1 (2024-06-14)
+Platform: x86_64-pc-linux-gnu
+Running under: Ubuntu 22.04.5 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
+LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so;  LAPACK version 3.10.0
+
+Random number generation:
+ RNG:     L'Ecuyer-CMRG 
+ Normal:  Inversion 
+ Sample:  Rejection 
+ 
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+time zone: Etc/UTC
+tzcode source: system (glibc)
+
+attached base packages:
+[1] stats4    grid      stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] BSgenome.Hsapiens.UCSC.hg38_1.4.5 BSgenome_1.72.0                   rtracklayer_1.64.0               
+ [4] BiocIO_1.14.0                     Biostrings_2.72.1                 XVector_0.44.0                   
+ [7] rhdf5_2.48.0                      SummarizedExperiment_1.34.0       Biobase_2.64.0                   
+[10] RcppArmadillo_14.0.2-1            Rcpp_1.0.13                       Matrix_1.7-1                     
+[13] GenomicRanges_1.56.2              GenomeInfoDb_1.40.1               IRanges_2.38.1                   
+[16] S4Vectors_0.42.1                  BiocGenerics_0.50.0               sparseMatrixStats_1.16.0         
+[19] MatrixGenerics_1.16.0             matrixStats_1.4.1                 data.table_1.16.2                
+[22] stringr_1.5.1                     plyr_1.8.9                        magrittr_2.0.3                   
+[25] ggplot2_3.5.1                     gtable_0.3.6                      gtools_3.9.5                     
+[28] gridExtra_2.3                     devtools_2.4.5                    usethis_3.0.0                    
+[31] ArchR_1.0.3                      
+
+loaded via a namespace (and not attached):
+ [1] tidyselect_1.2.1         dplyr_1.1.4              bitops_1.0-9             RCurl_1.98-1.16         
+ [5] fastmap_1.2.0            GenomicAlignments_1.40.0 promises_1.3.0           XML_3.99-0.17           
+ [9] digest_0.6.37            mime_0.12                lifecycle_1.0.4          ellipsis_0.3.2          
+[13] Cairo_1.6-2              compiler_4.4.1           rlang_1.1.4              tools_4.4.1             
+[17] yaml_2.3.10              utf8_1.2.4               S4Arrays_1.4.1           htmlwidgets_1.6.4       
+[21] pkgbuild_1.4.5           curl_5.2.3               DelayedArray_0.30.1      BiocParallel_1.38.0     
+[25] pkgload_1.4.0            abind_1.4-8              miniUI_0.1.1.1           withr_3.0.2             
+[29] purrr_1.0.2              fansi_1.0.6              urlchecker_1.0.1         profvis_0.4.0           
+[33] xtable_1.8-4             colorspace_2.1-1         Rhdf5lib_1.26.0          scales_1.3.0            
+[37] cli_3.6.3                crayon_1.5.3             generics_0.1.3           remotes_2.5.0           
+[41] rstudioapi_0.17.1        rjson_0.2.23             httr_1.4.7               sessioninfo_1.2.2       
+[45] cachem_1.1.0             zlibbioc_1.50.0          parallel_4.4.1           restfulr_0.0.15         
+[49] BiocManager_1.30.25      vctrs_0.6.5              jsonlite_1.8.9           glue_1.8.0              
+[53] codetools_0.2-20         stringi_1.8.4            later_1.3.2              UCSC.utils_1.0.0        
+[57] munsell_0.5.1            tibble_3.2.1             pillar_1.9.0             htmltools_0.5.8.1       
+[61] rhdf5filters_1.16.0      GenomeInfoDbData_1.2.12  R6_2.5.1                 shiny_1.9.1             
+[65] lattice_0.22-6           Rsamtools_2.20.0         memoise_2.0.1            httpuv_1.6.15           
+[69] SparseArray_1.4.8        fs_1.6.4                 pkgconfig_2.0.3         
+
+
+------- Log Info
+
+
+2025-12-13 12:21:53.003539 : createArrowFiles Input-Parameters, Class = list
+
+createArrowFiles Input-Parameters$inputFiles: length = 3
+[1] "/workspace/dataset/ATAC_555_2_fragments.tsv.gz_fragments.tsv.gz"       
+[2] "/workspace/dataset/ATAC_557_fragments.tsv.gz_fragments.tsv.gz"         
+[3] "/workspace/dataset/ATAC_HIP02_frozen_fragments.tsv.gz_fragments.tsv.gz"
+
+
+createArrowFiles Input-Parameters$sampleNames: length = 3
+[1] "ATAC_555_2"        "ATAC_557"          "ATAC_HIP02_frozen"
+
+
+createArrowFiles Input-Parameters$outputNames: length = 3
+[1] "ATAC_555_2"        "ATAC_557"          "ATAC_HIP02_frozen"
+
+
+createArrowFiles Input-Parameters$validBarcodes: length = 0
+NULL
+
+
+createArrowFiles Input-Parameters$minTSS: length = 1
+[1] 4
+
+
+createArrowFiles Input-Parameters$minFrags: length = 1
+[1] 500
+
+
+createArrowFiles Input-Parameters$maxFrags: length = 1
+[1] 1e+05
+
+
+createArrowFiles Input-Parameters$minFragSize: length = 1
+[1] 10
+
+
+createArrowFiles Input-Parameters$maxFragSize: length = 1
+[1] 2000
+
+
+createArrowFiles Input-Parameters$QCDir: length = 1
+[1] "QualityControl"
+
+
+createArrowFiles Input-Parameters$nucLength: length = 1
+[1] 147
+
+
+createArrowFiles Input-Parameters$promoterRegion: length = 2
+[1] 2000  100
+
+
+createArrowFiles Input-Parameters$excludeChr: length = 2
+[1] "chrM" "chrY"
+
+
+createArrowFiles Input-Parameters$nChunk: length = 1
+[1] 5
+
+
+createArrowFiles Input-Parameters$bcTag: length = 1
+[1] "qname"
+
+
+createArrowFiles Input-Parameters$gsubExpression: length = 0
+NULL
+
+
+createArrowFiles Input-Parameters$bamFlag: length = 0
+NULL
+
+
+createArrowFiles Input-Parameters$offsetPlus: length = 1
+[1] 4
+
+
+createArrowFiles Input-Parameters$offsetMinus: length = 1
+[1] -5
+
+
+createArrowFiles Input-Parameters$addTileMat: length = 1
+[1] TRUE
+
+
+createArrowFiles Input-Parameters$addGeneScoreMat: length = 1
+[1] TRUE
+
+
+createArrowFiles Input-Parameters$force: length = 1
+[1] FALSE
+
+
+createArrowFiles Input-Parameters$threads: length = 1
+[1] 6
+
+
+createArrowFiles Input-Parameters$parallelParam: length = 0
+NULL
+
+
+createArrowFiles Input-Parameters$subThreading: length = 1
+[1] TRUE
+
+
+createArrowFiles Input-Parameters$verbose: length = 1
+[1] TRUE
+
+
+createArrowFiles Input-Parameters$cleanTmp: length = 1
+[1] TRUE
+
+
+createArrowFiles Input-Parameters$logFile: length = 1
+[1] "ArchRLogs/ArchR-createArrows-25c7f578275-Date-2025-12-13_Time-12-21-52.96985.log"
+
+
+createArrowFiles Input-Parameters$filterFrags: length = 1
+[1] 500
+
+
+createArrowFiles Input-Parameters$filterTSS: length = 1
+[1] 4
+
+
+
+2025-12-13 12:21:53.015726 : Cleaning Temporary Files
+2025-12-13 12:21:53.018647 : Batch Execution w/ safelapply!, 0 mins elapsed.
+
+###########
+2025-12-13 12:21:53.059631 : Creating Arrow File ATAC_HIP02_frozen.arrow (ATAC_HIP02_frozen : 1 of 3)
+###########
+
+
+2025-12-13 12:21:53.060325 : validBC, Class = NULL
+
+validBC: length = 0
+NULL
+
+
+
+###########
+2025-12-13 12:21:53.084235 : Creating Arrow File ATAC_555_2.arrow (ATAC_555_2 : 2 of 3)
+###########
+
+
+2025-12-13 12:21:53.084906 : validBC, Class = NULL
+
+validBC: length = 0
+NULL
+
+
+
+2025-12-13 12:21:53.092707 : (ATAC_HIP02_frozen : 1 of 3) Determining Arrow Method to use!
+2025-12-13 12:21:53.101279 : (ATAC_HIP02_frozen : 1 of 3) Reading In Fragments from inputFiles (readMethod = tabix), 0.001 mins elapsed.
+2025-12-13 12:21:53.106314 : (ATAC_HIP02_frozen : 1 of 3) Tabix Bed To Temporary File, 0.001 mins elapsed.
+
+###########
+2025-12-13 12:21:53.107675 : Creating Arrow File ATAC_557.arrow (ATAC_557 : 3 of 3)
+###########
+
+
+2025-12-13 12:21:53.108398 : validBC, Class = NULL
+
+validBC: length = 0
+NULL
+
+
+
+2025-12-13 12:21:53.118029 : (ATAC_555_2 : 2 of 3) Determining Arrow Method to use!
+2025-12-13 12:21:53.126908 : (ATAC_555_2 : 2 of 3) Reading In Fragments from inputFiles (readMethod = tabix), 0.002 mins elapsed.
+2025-12-13 12:21:53.132167 : (ATAC_555_2 : 2 of 3) Tabix Bed To Temporary File, 0.002 mins elapsed.
+
+2025-12-13 12:21:53.140672 : (ATAC_557 : 3 of 3) Determining Arrow Method to use!
+2025-12-13 12:21:53.149284 : (ATAC_557 : 3 of 3) Reading In Fragments from inputFiles (readMethod = tabix), 0.002 mins elapsed.
+2025-12-13 12:21:53.154315 : (ATAC_557 : 3 of 3) Tabix Bed To Temporary File, 0.002 mins elapsed.
+
+2025-12-13 12:21:53.199286 : tileChromSizes, Class = GRanges
+GRanges object with 120 ranges and 1 metadata column:
+
+2025-12-13 12:21:53.222254 : tileChromSizes, Class = GRanges
+        seqnames              ranges strand |     chunkName
+           <Rle>           <IRanges>  <Rle> |   <character>
+    [1]     chr1          1-49791284      * |   chr1#chunk1
+    [2]     chr1   49791285-99582568      * |   chr1#chunk2
+    [3]     chr1  99582569-149373853      * |   chr1#chunk3
+    [4]     chr1 149373854-199165137      * |   chr1#chunk4
+    [5]     chr1 199165138-248956422      * |   chr1#chunk5
+    ...      ...                 ...    ... .           ...
+  [116]     chrY          1-11445483      * | chrY#chunk116
+  [117]     chrY   11445484-22890966      * | chrY#chunk117
+  [118]     chrY   22890967-34336449      * | chrY#chunk118
+  [119]     chrY   34336450-45781932      * | chrY#chunk119
+  [120]     chrY   45781933-57227415      * | chrY#chunk120
+  -------
+  seqinfo: 24 sequences from an unspecified genome; no seqlengths
+
+GRanges object with 120 ranges and 1 metadata column:
+
+2025-12-13 12:21:53.244352 : tileChromSizes, Class = GRanges
+GRanges object with 120 ranges and 1 metadata column:
+        seqnames              ranges strand |     chunkName
+           <Rle>           <IRanges>  <Rle> |   <character>
+    [1]     chr1          1-49791284      * |   chr1#chunk1
+    [2]     chr1   49791285-99582568      * |   chr1#chunk2
+    [3]     chr1  99582569-149373853      * |   chr1#chunk3
+    [4]     chr1 149373854-199165137      * |   chr1#chunk4
+    [5]     chr1 199165138-248956422      * |   chr1#chunk5
+    ...      ...                 ...    ... .           ...
+  [116]     chrY          1-11445483      * | chrY#chunk116
+  [117]     chrY   11445484-22890966      * | chrY#chunk117
+  [118]     chrY   22890967-34336449      * | chrY#chunk118
+  [119]     chrY   34336450-45781932      * | chrY#chunk119
+  [120]     chrY   45781933-57227415      * | chrY#chunk120
+  -------
+  seqinfo: 24 sequences from an unspecified genome; no seqlengths
+
+        seqnames              ranges strand |     chunkName
+           <Rle>           <IRanges>  <Rle> |   <character>
+    [1]     chr1          1-49791284      * |   chr1#chunk1
+    [2]     chr1   49791285-99582568      * |   chr1#chunk2
+    [3]     chr1  99582569-149373853      * |   chr1#chunk3
+    [4]     chr1 149373854-199165137      * |   chr1#chunk4
+    [5]     chr1 199165138-248956422      * |   chr1#chunk5
+    ...      ...                 ...    ... .           ...
+  [116]     chrY          1-11445483      * | chrY#chunk116
+  [117]     chrY   11445484-22890966      * | chrY#chunk117
+  [118]     chrY   22890967-34336449      * | chrY#chunk118
+  [119]     chrY   34336450-45781932      * | chrY#chunk119
+  [120]     chrY   45781933-57227415      * | chrY#chunk120
+  -------
+  seqinfo: 24 sequences from an unspecified genome; no seqlengths
+
+
+2025-12-13 12:21:54.138625 : (ATAC_557 : 3 of 3) .tabixToTmp Fragments-Chunk-(1 of 120)-chr1:1-49791284, Class = data.table
+ 
+2025-12-13 12:21:54.138625 : (ATAC_557 : 3 of 3) .tabixToTmp Fragments-Chunk-(1 of 120)-chr1:1-49791284, Class = data.frame
+(ATAC_557 : 3 of 3) .tabixToTmp Fragments-Chunk-(1 of 120)-chr1:1-49791284: nRows = 158954, nCols = 3
+      V2    V3                 V4
+   <num> <int>             <char>
+1: 10157 10339 TGCCTGTAGAAATTCG-1
+2: 10158 10191 CTTGTCGCATTATGGC-1
+3: 10158 10278 TTACGGATCACACGTA-1
+4: 10217 10437 TAGGTGTAGTGATTAG-1
+5: 16212 16243 ATGTACGCACTAAACC-1
+6: 17373 17515 ACTACGATCGGACGAA-1
+
+
+
+2025-12-13 12:21:54.146583 : (ATAC_557 : 3 of 3) .tabixToTmp Barcodes-Chunk-(1 of 120)-chr1:1-49791284, Class = character
+
+(ATAC_557 : 3 of 3) .tabixToTmp Barcodes-Chunk-(1 of 120)-chr1:1-49791284: length = 851
+[1] "TGCCTGTAGAAATTCG-1" "CTTGTCGCATTATGGC-1" "TTACGGATCACACGTA-1" "TAGGTGTAGTGATTAG-1" "ATGTACGCACTAAACC-1"
+[6] "ACTACGATCGGACGAA-1"
+
+
+
+2025-12-13 12:21:55.004596 : (ATAC_555_2 : 2 of 3) .tabixToTmp Fragments-Chunk-(1 of 120)-chr1:1-49791284, Class = data.table
+ 
+2025-12-13 12:21:55.004596 : (ATAC_555_2 : 2 of 3) .tabixToTmp Fragments-Chunk-(1 of 120)-chr1:1-49791284, Class = data.frame
+(ATAC_555_2 : 2 of 3) .tabixToTmp Fragments-Chunk-(1 of 120)-chr1:1-49791284: nRows = 296996, nCols = 3
+      V2    V3                 V4
+   <num> <int>             <char>
+1: 10152 10197 AATGGCTCAATCAGGG-1
+2: 10157 10192 ACCAAACTCGACTGGC-1
+3: 10164 10437 TTTGTGTGTGCTGTGC-1
+4: 10387 10460 GGGACCTTCAGTGGTT-1
+5: 16069 16244 TAATTCCAGGAGTCTG-1
+6: 17464 17520 ACGTGGCCAGAGTCGA-1
+
+
+
+2025-12-13 12:21:55.023385 : (ATAC_555_2 : 2 of 3) .tabixToTmp Barcodes-Chunk-(1 of 120)-chr1:1-49791284, Class = character
+
+(ATAC_555_2 : 2 of 3) .tabixToTmp Barcodes-Chunk-(1 of 120)-chr1:1-49791284: length = 1227
+[1] "AATGGCTCAATCAGGG-1" "ACCAAACTCGACTGGC-1" "TTTGTGTGTGCTGTGC-1" "GGGACCTTCAGTGGTT-1" "TAATTCCAGGAGTCTG-1"
+[6] "ACGTGGCCAGAGTCGA-1"
+
+
+
+2025-12-13 12:21:57.370402 : (ATAC_HIP02_frozen : 1 of 3) .tabixToTmp Fragments-Chunk-(1 of 120)-chr1:1-49791284, Class = data.table
+ 
+2025-12-13 12:21:57.370402 : (ATAC_HIP02_frozen : 1 of 3) .tabixToTmp Fragments-Chunk-(1 of 120)-chr1:1-49791284, Class = data.frame
+(ATAC_HIP02_frozen : 1 of 3) .tabixToTmp Fragments-Chunk-(1 of 120)-chr1:1-49791284: nRows = 789557, nCols = 3
+      V2    V3                 V4
+   <num> <int>             <char>
+1: 10086 10308 TCCATCGAGAGCTACG-1
+2: 10098 10277 TTCTAACGTCCGTGCA-1
+3: 10126 10278 CCACAGGCATCATGTG-1
+4: 10144 10180 TGGTCAAGTTCAGTAC-1
+5: 10157 10204 CTGGCAGGTAGGGTTG-1
+6: 10159 10185 ATATTCCTCCTATCAT-1
+
+
+2025-12-13 12:21:57.424173 : (ATAC_557 : 3 of 3) Reading TabixFile 4 Percent, 0.073 mins elapsed.
+
+2025-12-13 12:21:57.387388 : (ATAC_HIP02_frozen : 1 of 3) .tabixToTmp Barcodes-Chunk-(1 of 120)-chr1:1-49791284, Class = character
+
+(ATAC_HIP02_frozen : 1 of 3) .tabixToTmp Barcodes-Chunk-(1 of 120)-chr1:1-49791284: length = 6412
+[1] "TCCATCGAGAGCTACG-1" "TTCTAACGTCCGTGCA-1" "CCACAGGCATCATGTG-1" "TGGTCAAGTTCAGTAC-1" "CTGGCAGGTAGGGTTG-1"
+[6] "ATATTCCTCCTATCAT-1"
+
+
+2025-12-13 12:21:58.161719 : (ATAC_555_2 : 2 of 3) Reading TabixFile 4 Percent, 0.086 mins elapsed.
+2025-12-13 12:22:01.152903 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 4 Percent, 0.135 mins elapsed.
+2025-12-13 12:22:02.1642 : (ATAC_557 : 3 of 3) Reading TabixFile 8 Percent, 0.152 mins elapsed.
+2025-12-13 12:22:04.049527 : (ATAC_555_2 : 2 of 3) Reading TabixFile 8 Percent, 0.184 mins elapsed.
+2025-12-13 12:22:07.010568 : (ATAC_557 : 3 of 3) Reading TabixFile 12 Percent, 0.233 mins elapsed.
+2025-12-13 12:22:09.711155 : (ATAC_555_2 : 2 of 3) Reading TabixFile 12 Percent, 0.278 mins elapsed.
+2025-12-13 12:22:12.072799 : (ATAC_557 : 3 of 3) Reading TabixFile 17 Percent, 0.318 mins elapsed.
+2025-12-13 12:22:14.158143 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 8 Percent, 0.352 mins elapsed.
+2025-12-13 12:22:16.366992 : (ATAC_555_2 : 2 of 3) Reading TabixFile 17 Percent, 0.389 mins elapsed.
+2025-12-13 12:22:16.863899 : (ATAC_557 : 3 of 3) Reading TabixFile 21 Percent, 0.397 mins elapsed.
+2025-12-13 12:22:21.139653 : (ATAC_555_2 : 2 of 3) Reading TabixFile 21 Percent, 0.469 mins elapsed.
+2025-12-13 12:22:22.028467 : (ATAC_557 : 3 of 3) Reading TabixFile 25 Percent, 0.483 mins elapsed.
+2025-12-13 12:22:24.321096 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 12 Percent, 0.522 mins elapsed.
+2025-12-13 12:22:27.174072 : (ATAC_557 : 3 of 3) Reading TabixFile 29 Percent, 0.569 mins elapsed.
+2025-12-13 12:22:28.817201 : (ATAC_555_2 : 2 of 3) Reading TabixFile 25 Percent, 0.597 mins elapsed.
+2025-12-13 12:22:33.303984 : (ATAC_557 : 3 of 3) Reading TabixFile 33 Percent, 0.671 mins elapsed.
+2025-12-13 12:22:33.943516 : (ATAC_555_2 : 2 of 3) Reading TabixFile 29 Percent, 0.682 mins elapsed.
+2025-12-13 12:22:36.574758 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 17 Percent, 0.726 mins elapsed.
+2025-12-13 12:22:37.29871 : (ATAC_557 : 3 of 3) Reading TabixFile 38 Percent, 0.738 mins elapsed.
+2025-12-13 12:22:39.986887 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 21 Percent, 0.782 mins elapsed.
+2025-12-13 12:22:40.059114 : (ATAC_555_2 : 2 of 3) Reading TabixFile 33 Percent, 0.784 mins elapsed.
+2025-12-13 12:22:40.414363 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 25 Percent, 0.79 mins elapsed.
+2025-12-13 12:22:40.679947 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 29 Percent, 0.794 mins elapsed.
+2025-12-13 12:22:40.966521 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 33 Percent, 0.799 mins elapsed.
+2025-12-13 12:22:41.284801 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 38 Percent, 0.804 mins elapsed.
+2025-12-13 12:22:42.578902 : (ATAC_557 : 3 of 3) Reading TabixFile 42 Percent, 0.826 mins elapsed.
+2025-12-13 12:22:44.170157 : (ATAC_555_2 : 2 of 3) Reading TabixFile 38 Percent, 0.852 mins elapsed.
+2025-12-13 12:22:46.897123 : (ATAC_557 : 3 of 3) Reading TabixFile 46 Percent, 0.898 mins elapsed.
+2025-12-13 12:22:47.529113 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 42 Percent, 0.908 mins elapsed.
+2025-12-13 12:22:50.173867 : (ATAC_555_2 : 2 of 3) Reading TabixFile 42 Percent, 0.953 mins elapsed.
+2025-12-13 12:22:51.654476 : (ATAC_557 : 3 of 3) Reading TabixFile 50 Percent, 0.977 mins elapsed.
+2025-12-13 12:22:54.915872 : (ATAC_555_2 : 2 of 3) Reading TabixFile 46 Percent, 1.032 mins elapsed.
+2025-12-13 12:22:55.14729 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 46 Percent, 1.035 mins elapsed.
+2025-12-13 12:22:55.406454 : (ATAC_557 : 3 of 3) Reading TabixFile 54 Percent, 1.04 mins elapsed.
+2025-12-13 12:22:59.986802 : (ATAC_557 : 3 of 3) Reading TabixFile 58 Percent, 1.116 mins elapsed.
+2025-12-13 12:23:00.282238 : (ATAC_555_2 : 2 of 3) Reading TabixFile 50 Percent, 1.121 mins elapsed.
+2025-12-13 12:23:03.056686 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 50 Percent, 1.167 mins elapsed.
+2025-12-13 12:23:03.814591 : (ATAC_557 : 3 of 3) Reading TabixFile 62 Percent, 1.18 mins elapsed.
+2025-12-13 12:23:04.512872 : (ATAC_555_2 : 2 of 3) Reading TabixFile 54 Percent, 1.191 mins elapsed.
+2025-12-13 12:23:08.737826 : (ATAC_557 : 3 of 3) Reading TabixFile 67 Percent, 1.262 mins elapsed.
+2025-12-13 12:23:09.680169 : (ATAC_555_2 : 2 of 3) Reading TabixFile 58 Percent, 1.278 mins elapsed.
+2025-12-13 12:23:09.842192 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 54 Percent, 1.28 mins elapsed.
+2025-12-13 12:23:12.998018 : (ATAC_557 : 3 of 3) Reading TabixFile 71 Percent, 1.333 mins elapsed.
+2025-12-13 12:23:14.302808 : (ATAC_555_2 : 2 of 3) Reading TabixFile 62 Percent, 1.355 mins elapsed.
+2025-12-13 12:23:16.909336 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 58 Percent, 1.398 mins elapsed.
+2025-12-13 12:23:17.47454 : (ATAC_557 : 3 of 3) Reading TabixFile 75 Percent, 1.408 mins elapsed.
+2025-12-13 12:23:19.914058 : (ATAC_555_2 : 2 of 3) Reading TabixFile 67 Percent, 1.448 mins elapsed.
+2025-12-13 12:23:21.763051 : (ATAC_557 : 3 of 3) Reading TabixFile 79 Percent, 1.479 mins elapsed.
+2025-12-13 12:23:23.438459 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 62 Percent, 1.507 mins elapsed.
+2025-12-13 12:23:24.541095 : (ATAC_555_2 : 2 of 3) Reading TabixFile 71 Percent, 1.525 mins elapsed.
+2025-12-13 12:23:26.073361 : (ATAC_557 : 3 of 3) Reading TabixFile 83 Percent, 1.551 mins elapsed.
+2025-12-13 12:23:29.572917 : (ATAC_555_2 : 2 of 3) Reading TabixFile 75 Percent, 1.609 mins elapsed.
+2025-12-13 12:23:30.034601 : (ATAC_557 : 3 of 3) Reading TabixFile 88 Percent, 1.617 mins elapsed.
+2025-12-13 12:23:31.116488 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 67 Percent, 1.635 mins elapsed.
+2025-12-13 12:23:33.340316 : (ATAC_557 : 3 of 3) Reading TabixFile 92 Percent, 1.672 mins elapsed.
+2025-12-13 12:23:34.195545 : (ATAC_555_2 : 2 of 3) Reading TabixFile 79 Percent, 1.686 mins elapsed.
+2025-12-13 12:23:37.576154 : (ATAC_557 : 3 of 3) Reading TabixFile 96 Percent, 1.743 mins elapsed.
+2025-12-13 12:23:38.542702 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 71 Percent, 1.759 mins elapsed.
+2025-12-13 12:23:39.088679 : (ATAC_555_2 : 2 of 3) Reading TabixFile 83 Percent, 1.768 mins elapsed.
+2025-12-13 12:23:40.993639 : (ATAC_557 : 3 of 3) Reading TabixFile 100 Percent, 1.8 mins elapsed.
+2025-12-13 12:23:42.363035 : (ATAC_557 : 3 of 3) Parallel Hdf5 Linkage Temporary File, 1.822 mins elapsed.
+2025-12-13 12:23:42.91389 : (ATAC_555_2 : 2 of 3) Reading TabixFile 88 Percent, 1.832 mins elapsed.
+2025-12-13 12:23:43.442792 : (ATAC_557 : 3 of 3) Successful creation of Temporary File, 1.84 mins elapsed.
+2025-12-13 12:23:43.445741 : (ATAC_557 : 3 of 3) Creating ArrowFile From Temporary File, 1.84 mins elapsed.
+
+2025-12-13 12:23:43.650347 : (ATAC_557 : 3 of 3) chunkChrNames, Class = data.frame
+(ATAC_557 : 3 of 3) chunkChrNames: nRows = 118, nCols = 1
+     chunkNames
+1   chr1#chunk1
+2   chr1#chunk2
+3   chr1#chunk3
+4   chr1#chunk4
+5   chr1#chunk5
+6 chr10#chunk46
+
+
+2025-12-13 12:23:43.653457 : (ATAC_557 : 3 of 3) Counting Unique Barcodes From Temporary File, 1.844 mins elapsed.
+2025-12-13 12:23:44.02003 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 75 Percent, 1.85 mins elapsed.
+
+2025-12-13 12:23:44.602042 : (ATAC_557 : 3 of 3) BarcodeFrequencyTable, Class = data.table
+ 
+2025-12-13 12:23:44.602042 : (ATAC_557 : 3 of 3) BarcodeFrequencyTable, Class = data.frame
+(ATAC_557 : 3 of 3) BarcodeFrequencyTable: nRows = 851, nCols = 2
+            values.V1    V1
+               <char> <int>
+1: TTAGGTGGTCACAGGA-1 43964
+2: AGCTGGCCATCACAAC-1 25549
+3: AGATAGAAGTCGTGAG-1 23154
+4: GAAGTGGCACATAAAG-1 21985
+5: AAACGAACAAGCGACA-1 21739
+6: TGCACCTTCTCTGACC-1 20817
+
+
+
+2025-12-13 12:23:44.61505 : (ATAC_557 : 3 of 3) BarcodesMinMaxFrags, Class = data.frame
+(ATAC_557 : 3 of 3) BarcodesMinMaxFrags: nRows = 851, nCols = 1
+                  bc
+1 TTAGGTGGTCACAGGA-1
+2 AGCTGGCCATCACAAC-1
+3 AGATAGAAGTCGTGAG-1
+4 GAAGTGGCACATAAAG-1
+5 AAACGAACAAGCGACA-1
+6 TGCACCTTCTCTGACC-1
+
+
+
+2025-12-13 12:23:45.750885 : (ATAC_557 : 3 of 3) Unique Chromosomes, Class = data.frame
+(ATAC_557 : 3 of 3) Unique Chromosomes: nRows = 24, nCols = 1
+   chr
+1 chr1
+2 chr2
+3 chr3
+4 chr4
+5 chr5
+6 chr6
+
+
+2025-12-13 12:23:45.804412 : (ATAC_557 : 3 of 3) Adding Chromosome 1 of 24, 1.88 mins elapsed.
+2025-12-13 12:23:45.846952 : (ATAC_557 : 3 of 3) Adding Chromosome 2 of 24, 1.88 mins elapsed.
+2025-12-13 12:23:46.203682 : (ATAC_555_2 : 2 of 3) Reading TabixFile 92 Percent, 1.886 mins elapsed.
+
+2025-12-13 12:23:47.185672 : (ATAC_557 : 3 of 3) .tmpToArrow Fragments0-Chr-(1 of 24)-chr1, Class = IRanges
+
+(ATAC_557 : 3 of 3) .tmpToArrow Fragments0-Chr-(1 of 24)-chr1: length = 558731
+IRanges object with 6 ranges and 1 metadata column:
+          start       end     width |                 RG
+      <integer> <integer> <integer> |              <Rle>
+  [1]   1308108   1308450       343 | AAACGAAAGGCCTCTG-1
+  [2]   1413132   1413288       157 | AAACGAAAGGCCTCTG-1
+  [3]   1414112   1414261       150 | AAACGAAAGGCCTCTG-1
+  [4]   1692760   1692802        43 | AAACGAAAGGCCTCTG-1
+  [5]   1919689   1919816       128 | AAACGAAAGGCCTCTG-1
+  [6]   2133572   2133596        25 | AAACGAAAGGCCTCTG-1
+
+
+
+2025-12-13 12:23:47.195032 : (ATAC_557 : 3 of 3) .tmpToArrow Barcodes0-Chr-(1 of 24)-chr1, Class = data.frame
+(ATAC_557 : 3 of 3) .tmpToArrow Barcodes0-Chr-(1 of 24)-chr1: nRows = 4255, nCols = 1
+                  bc
+1 AAACGAAAGGCCTCTG-1
+2 AAACGAACAAGCGACA-1
+3 AAACGAATCGCCTTAC-1
+4 AAACGAATCTGATCTT-1
+5 AAACTCGAGTTACCAC-1
+6 AAACTCGCAGAGCCAA-1
+
+
+
+2025-12-13 12:23:47.198356 : (ATAC_557 : 3 of 3) .tmpToArrow bcPass0-Chr-(1 of 24)-chr1, Class = data.frame
+(ATAC_557 : 3 of 3) .tmpToArrow bcPass0-Chr-(1 of 24)-chr1: nRows = 851, nCols = 1
+                  bc
+1 TTAGGTGGTCACAGGA-1
+2 AGCTGGCCATCACAAC-1
+3 AGATAGAAGTCGTGAG-1
+4 GAAGTGGCACATAAAG-1
+5 AAACGAACAAGCGACA-1
+6 TGCACCTTCTCTGACC-1
+
+
+
+2025-12-13 12:23:47.560264 : (ATAC_557 : 3 of 3) .tmpToArrow Fragments-Chr-(1 of 24)-chr1, Class = IRanges
+
+(ATAC_557 : 3 of 3) .tmpToArrow Fragments-Chr-(1 of 24)-chr1: length = 558726
+IRanges object with 6 ranges and 1 metadata column:
+          start       end     width |                 RG
+      <integer> <integer> <integer> |              <Rle>
+  [1]    817313    817346        34 | TTAGGTGGTCACAGGA-1
+  [2]    827420    827456        37 | TTAGGTGGTCACAGGA-1
+  [3]    959362    959423        62 | TTAGGTGGTCACAGGA-1
+  [4]    967057    967258       202 | TTAGGTGGTCACAGGA-1
+  [5]   1013227   1013420       194 | TTAGGTGGTCACAGGA-1
+  [6]   1033059   1033138        80 | TTAGGTGGTCACAGGA-1
+
+
+
+2025-12-13 12:23:47.566108 : (ATAC_557 : 3 of 3) .tmpToArrow Barcodes-Chr-(1 of 24)-chr1, Class = data.frame
+(ATAC_557 : 3 of 3) .tmpToArrow Barcodes-Chr-(1 of 24)-chr1: nRows = 851, nCols = 1
+                  bc
+1 TTAGGTGGTCACAGGA-1
+2 AGCTGGCCATCACAAC-1
+3 AGATAGAAGTCGTGAG-1
+4 GAAGTGGCACATAAAG-1
+5 AAACGAACAAGCGACA-1
+6 TGCACCTTCTCTGACC-1
+
+
+2025-12-13 12:23:49.472564 : (ATAC_557 : 3 of 3) Adding Chromosome 3 of 24, 1.941 mins elapsed.
+2025-12-13 12:23:49.547615 : (ATAC_557 : 3 of 3) Adding Chromosome 4 of 24, 1.942 mins elapsed.
+2025-12-13 12:23:50.716706 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 79 Percent, 1.962 mins elapsed.
+2025-12-13 12:23:50.77754 : (ATAC_555_2 : 2 of 3) Reading TabixFile 96 Percent, 1.963 mins elapsed.
+2025-12-13 12:23:52.728357 : (ATAC_557 : 3 of 3) Adding Chromosome 5 of 24, 1.995 mins elapsed.
+2025-12-13 12:23:52.779189 : (ATAC_557 : 3 of 3) Adding Chromosome 6 of 24, 1.996 mins elapsed.
+2025-12-13 12:23:54.164466 : (ATAC_555_2 : 2 of 3) Reading TabixFile 100 Percent, 2.019 mins elapsed.
+2025-12-13 12:23:55.451464 : (ATAC_555_2 : 2 of 3) Parallel Hdf5 Linkage Temporary File, 2.041 mins elapsed.
+2025-12-13 12:23:55.79789 : (ATAC_557 : 3 of 3) Adding Chromosome 7 of 24, 2.046 mins elapsed.
+2025-12-13 12:23:55.84419 : (ATAC_557 : 3 of 3) Adding Chromosome 8 of 24, 2.047 mins elapsed.
+2025-12-13 12:23:56.274341 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 83 Percent, 2.054 mins elapsed.
+2025-12-13 12:23:56.511745 : (ATAC_555_2 : 2 of 3) Successful creation of Temporary File, 2.058 mins elapsed.
+2025-12-13 12:23:56.514332 : (ATAC_555_2 : 2 of 3) Creating ArrowFile From Temporary File, 2.058 mins elapsed.
+
+2025-12-13 12:23:56.729292 : (ATAC_555_2 : 2 of 3) chunkChrNames, Class = data.frame
+(ATAC_555_2 : 2 of 3) chunkChrNames: nRows = 118, nCols = 1
+     chunkNames
+1   chr1#chunk1
+2   chr1#chunk2
+3   chr1#chunk3
+4   chr1#chunk4
+5   chr1#chunk5
+6 chr10#chunk46
+
+
+2025-12-13 12:23:56.732191 : (ATAC_555_2 : 2 of 3) Counting Unique Barcodes From Temporary File, 2.062 mins elapsed.
+
+2025-12-13 12:23:57.76265 : (ATAC_555_2 : 2 of 3) BarcodeFrequencyTable, Class = data.table
+ 
+2025-12-13 12:23:57.76265 : (ATAC_555_2 : 2 of 3) BarcodeFrequencyTable, Class = data.frame
+(ATAC_555_2 : 2 of 3) BarcodeFrequencyTable: nRows = 1227, nCols = 2
+            values.V1    V1
+               <char> <int>
+1: TGCCTCACACCGTCTT-1 51171
+2: GCGATCGAGTAGGAAG-1 27023
+3: GAGACTTAGGCGCTTC-1 26250
+4: AAGGAGCCACGATATC-1 23004
+5: TTAGCTTCATTTGGTG-1 22617
+6: ATGTTTCCAGCGTACC-1 22466
+
+
+
+2025-12-13 12:23:57.775365 : (ATAC_555_2 : 2 of 3) BarcodesMinMaxFrags, Class = data.frame
+(ATAC_555_2 : 2 of 3) BarcodesMinMaxFrags: nRows = 1227, nCols = 1
+                  bc
+1 TGCCTCACACCGTCTT-1
+2 GCGATCGAGTAGGAAG-1
+3 GAGACTTAGGCGCTTC-1
+4 AAGGAGCCACGATATC-1
+5 TTAGCTTCATTTGGTG-1
+6 ATGTTTCCAGCGTACC-1
+
+
+2025-12-13 12:23:58.548716 : (ATAC_557 : 3 of 3) Adding Chromosome 9 of 24, 2.092 mins elapsed.
+2025-12-13 12:23:58.634313 : (ATAC_557 : 3 of 3) Adding Chromosome 10 of 24, 2.094 mins elapsed.
+
+2025-12-13 12:23:58.982423 : (ATAC_555_2 : 2 of 3) Unique Chromosomes, Class = data.frame
+(ATAC_555_2 : 2 of 3) Unique Chromosomes: nRows = 24, nCols = 1
+   chr
+1 chr1
+2 chr2
+3 chr3
+4 chr4
+5 chr5
+6 chr6
+
+
+2025-12-13 12:23:59.041141 : (ATAC_555_2 : 2 of 3) Adding Chromosome 1 of 24, 2.1 mins elapsed.
+2025-12-13 12:23:59.081119 : (ATAC_555_2 : 2 of 3) Adding Chromosome 2 of 24, 2.101 mins elapsed.
+
+2025-12-13 12:24:00.464839 : (ATAC_555_2 : 2 of 3) .tmpToArrow Fragments0-Chr-(1 of 24)-chr1, Class = IRanges
+
+(ATAC_555_2 : 2 of 3) .tmpToArrow Fragments0-Chr-(1 of 24)-chr1: length = 1033960
+IRanges object with 6 ranges and 1 metadata column:
+          start       end     width |                 RG
+      <integer> <integer> <integer> |              <Rle>
+  [1]    967326    967546       221 | AAACGAACAATCATCG-1
+  [2]   1150269   1150393       125 | AAACGAACAATCATCG-1
+  [3]   1375365   1375460        96 | AAACGAACAATCATCG-1
+  [4]   1375471   1375534        64 | AAACGAACAATCATCG-1
+  [5]   1435656   1435689        34 | AAACGAACAATCATCG-1
+  [6]   1610305   1610341        37 | AAACGAACAATCATCG-1
+
+
+
+2025-12-13 12:24:00.475444 : (ATAC_555_2 : 2 of 3) .tmpToArrow Barcodes0-Chr-(1 of 24)-chr1, Class = data.frame
+(ATAC_555_2 : 2 of 3) .tmpToArrow Barcodes0-Chr-(1 of 24)-chr1: nRows = 6135, nCols = 1
+                  bc
+1 AAACGAACAATCATCG-1
+2 AAACGAATCCTCAAGA-1
+3 AAACTCGAGCGTTGCC-1
+4 AAACTCGCAAGGCGTA-1
+5 AAACTGCCACAGTTCA-1
+6 AAAGATGCATGGCCCA-1
+
+
+
+2025-12-13 12:24:00.479116 : (ATAC_555_2 : 2 of 3) .tmpToArrow bcPass0-Chr-(1 of 24)-chr1, Class = data.frame
+(ATAC_555_2 : 2 of 3) .tmpToArrow bcPass0-Chr-(1 of 24)-chr1: nRows = 1227, nCols = 1
+                  bc
+1 TGCCTCACACCGTCTT-1
+2 GCGATCGAGTAGGAAG-1
+3 GAGACTTAGGCGCTTC-1
+4 AAGGAGCCACGATATC-1
+5 TTAGCTTCATTTGGTG-1
+6 ATGTTTCCAGCGTACC-1
+
+
+2025-12-13 12:24:00.646414 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 88 Percent, 2.127 mins elapsed.
+
+2025-12-13 12:24:01.11423 : (ATAC_555_2 : 2 of 3) .tmpToArrow Fragments-Chr-(1 of 24)-chr1, Class = IRanges
+
+(ATAC_555_2 : 2 of 3) .tmpToArrow Fragments-Chr-(1 of 24)-chr1: length = 1033939
+IRanges object with 6 ranges and 1 metadata column:
+          start       end     width |                 RG
+      <integer> <integer> <integer> |              <Rle>
+  [1]    778669    778710        42 | TGCCTCACACCGTCTT-1
+  [2]    827476    827540        65 | TGCCTCACACCGTCTT-1
+  [3]    921257    921313        57 | TGCCTCACACCGTCTT-1
+  [4]    924774    924815        42 | TGCCTCACACCGTCTT-1
+  [5]    985830    986200       371 | TGCCTCACACCGTCTT-1
+  [6]   1033072   1033114        43 | TGCCTCACACCGTCTT-1
+
+
+
+2025-12-13 12:24:01.119556 : (ATAC_555_2 : 2 of 3) .tmpToArrow Barcodes-Chr-(1 of 24)-chr1, Class = data.frame
+(ATAC_555_2 : 2 of 3) .tmpToArrow Barcodes-Chr-(1 of 24)-chr1: nRows = 1227, nCols = 1
+                  bc
+1 TGCCTCACACCGTCTT-1
+2 GCGATCGAGTAGGAAG-1
+3 GAGACTTAGGCGCTTC-1
+4 AAGGAGCCACGATATC-1
+5 TTAGCTTCATTTGGTG-1
+6 ATGTTTCCAGCGTACC-1
+
+
+2025-12-13 12:24:45.977374 : (ATAC_557 : 3 of 3) Adding Chromosome 11 of 24, 2.883 mins elapsed.
+2025-12-13 12:24:46.138454 : (ATAC_557 : 3 of 3) Adding Chromosome 12 of 24, 2.885 mins elapsed.
+2025-12-13 12:24:47.36029 : (ATAC_555_2 : 2 of 3) Adding Chromosome 3 of 24, 2.906 mins elapsed.
+2025-12-13 12:24:47.41387 : (ATAC_555_2 : 2 of 3) Adding Chromosome 4 of 24, 2.907 mins elapsed.
+2025-12-13 12:24:50.374821 : (ATAC_557 : 3 of 3) Adding Chromosome 13 of 24, 2.956 mins elapsed.
+2025-12-13 12:24:50.760479 : (ATAC_557 : 3 of 3) Adding Chromosome 14 of 24, 2.962 mins elapsed.
+2025-12-13 12:24:50.87203 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 92 Percent, 2.964 mins elapsed.
+2025-12-13 12:24:51.457322 : (ATAC_555_2 : 2 of 3) Adding Chromosome 5 of 24, 2.974 mins elapsed.
+2025-12-13 12:24:51.61702 : (ATAC_555_2 : 2 of 3) Adding Chromosome 6 of 24, 2.977 mins elapsed.
+2025-12-13 12:24:52.292808 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 96 Percent, 2.988 mins elapsed.
+2025-12-13 12:24:52.892062 : (ATAC_HIP02_frozen : 1 of 3) Reading TabixFile 100 Percent, 2.998 mins elapsed.
+2025-12-13 12:24:53.128087 : (ATAC_HIP02_frozen : 1 of 3) Parallel Hdf5 Linkage Temporary File, 3.002 mins elapsed.
+2025-12-13 12:24:53.300468 : (ATAC_557 : 3 of 3) Adding Chromosome 15 of 24, 3.005 mins elapsed.
+2025-12-13 12:24:53.77708 : (ATAC_557 : 3 of 3) Adding Chromosome 16 of 24, 3.013 mins elapsed.
+2025-12-13 12:24:54.029393 : (ATAC_HIP02_frozen : 1 of 3) Successful creation of Temporary File, 3.017 mins elapsed.
+2025-12-13 12:24:54.032238 : (ATAC_HIP02_frozen : 1 of 3) Creating ArrowFile From Temporary File, 3.017 mins elapsed.
+
+2025-12-13 12:24:54.221837 : (ATAC_HIP02_frozen : 1 of 3) chunkChrNames, Class = data.frame
+(ATAC_HIP02_frozen : 1 of 3) chunkChrNames: nRows = 85, nCols = 1
+     chunkNames
+1   chr1#chunk1
+2   chr1#chunk2
+3   chr1#chunk3
+4   chr1#chunk4
+5   chr1#chunk5
+6 chr10#chunk46
+
+
+2025-12-13 12:24:54.224789 : (ATAC_HIP02_frozen : 1 of 3) Counting Unique Barcodes From Temporary File, 3.02 mins elapsed.
+2025-12-13 12:24:54.747589 : (ATAC_555_2 : 2 of 3) Adding Chromosome 7 of 24, 3.029 mins elapsed.
+2025-12-13 12:24:54.794715 : (ATAC_555_2 : 2 of 3) Adding Chromosome 8 of 24, 3.03 mins elapsed.
+
+2025-12-13 12:24:55.381248 : (ATAC_HIP02_frozen : 1 of 3) BarcodeFrequencyTable, Class = data.table
+ 
+2025-12-13 12:24:55.381248 : (ATAC_HIP02_frozen : 1 of 3) BarcodeFrequencyTable, Class = data.frame
+(ATAC_HIP02_frozen : 1 of 3) BarcodeFrequencyTable: nRows = 6412, nCols = 2
+            values.V1    V1
+               <char> <int>
+1: CATTGGACAGCAACAG-1 47827
+2: GCGGGTTAGGCCTCTG-1 34696
+3: CGTAAACTCGTTGTAG-1 26957
+4: GTTCAAGTCTGGCCAG-1 25260
+5: TGCTTTAGTATCTGCA-1 23851
+6: CTAGGGCTCCAATAGC-1 23220
+
+
+
+2025-12-13 12:24:55.396745 : (ATAC_HIP02_frozen : 1 of 3) BarcodesMinMaxFrags, Class = data.frame
+(ATAC_HIP02_frozen : 1 of 3) BarcodesMinMaxFrags: nRows = 6412, nCols = 1
+                  bc
+1 CATTGGACAGCAACAG-1
+2 GCGGGTTAGGCCTCTG-1
+3 CGTAAACTCGTTGTAG-1
+4 GTTCAAGTCTGGCCAG-1
+5 TGCTTTAGTATCTGCA-1
+6 CTAGGGCTCCAATAGC-1
+
+
+2025-12-13 12:24:55.943214 : (ATAC_557 : 3 of 3) Adding Chromosome 17 of 24, 3.049 mins elapsed.
+
+2025-12-13 12:24:56.380388 : (ATAC_HIP02_frozen : 1 of 3) Unique Chromosomes, Class = data.frame
+(ATAC_HIP02_frozen : 1 of 3) Unique Chromosomes: nRows = 24, nCols = 1
+   chr
+1 chr1
+2 chr2
+3 chr3
+4 chr4
+5 chr5
+6 chr6
+
+
+2025-12-13 12:24:56.424474 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 1 of 24, 3.057 mins elapsed.
+2025-12-13 12:24:56.427154 : (ATAC_557 : 3 of 3) Adding Chromosome 18 of 24, 3.057 mins elapsed.
+2025-12-13 12:24:56.458242 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 2 of 24, 3.057 mins elapsed.
+2025-12-13 12:24:57.669708 : (ATAC_555_2 : 2 of 3) Adding Chromosome 9 of 24, 3.078 mins elapsed.
+2025-12-13 12:24:57.717236 : (ATAC_555_2 : 2 of 3) Adding Chromosome 10 of 24, 3.078 mins elapsed.
+
+2025-12-13 12:24:58.124021 : (ATAC_HIP02_frozen : 1 of 3) .tmpToArrow Fragments0-Chr-(1 of 24)-chr1, Class = IRanges
+
+(ATAC_HIP02_frozen : 1 of 3) .tmpToArrow Fragments0-Chr-(1 of 24)-chr1: length = 2807028
+IRanges object with 6 ranges and 1 metadata column:
+          start       end     width |                 RG
+      <integer> <integer> <integer> |              <Rle>
+  [1]    633995    634073        79 | AAACGAAAGACAACGC-1
+  [2]    944545    944736       192 | AAACGAAAGACAACGC-1
+  [3]    947108    947285       178 | AAACGAAAGACAACGC-1
+  [4]    948913    949069       157 | AAACGAAAGACAACGC-1
+  [5]    954777    954933       157 | AAACGAAAGACAACGC-1
+  [6]    954934    955109       176 | AAACGAAAGACAACGC-1
+
+
+
+2025-12-13 12:24:58.133103 : (ATAC_HIP02_frozen : 1 of 3) .tmpToArrow Barcodes0-Chr-(1 of 24)-chr1, Class = data.frame
+(ATAC_HIP02_frozen : 1 of 3) .tmpToArrow Barcodes0-Chr-(1 of 24)-chr1: nRows = 32060, nCols = 1
+                  bc
+1 AAACGAAAGACAACGC-1
+2 AAACGAAAGCCTGTAT-1
+3 AAACGAAAGGAGTCTG-1
+4 AAACGAAAGGCGTCCT-1
+5 AAACGAAAGGTAGGCT-1
+6 AAACGAACAATGACTC-1
+
+
+
+2025-12-13 12:24:58.135986 : (ATAC_HIP02_frozen : 1 of 3) .tmpToArrow bcPass0-Chr-(1 of 24)-chr1, Class = data.frame
+(ATAC_HIP02_frozen : 1 of 3) .tmpToArrow bcPass0-Chr-(1 of 24)-chr1: nRows = 6412, nCols = 1
+                  bc
+1 CATTGGACAGCAACAG-1
+2 GCGGGTTAGGCCTCTG-1
+3 CGTAAACTCGTTGTAG-1
+4 GTTCAAGTCTGGCCAG-1
+5 TGCTTTAGTATCTGCA-1
+6 CTAGGGCTCCAATAGC-1
+
+
+2025-12-13 12:24:58.595654 : (ATAC_557 : 3 of 3) Adding Chromosome 19 of 24, 3.093 mins elapsed.
+2025-12-13 12:24:59.66688 : (ATAC_557 : 3 of 3) Adding Chromosome 20 of 24, 3.111 mins elapsed.
+2025-12-13 12:25:00.973725 : (ATAC_555_2 : 2 of 3) Adding Chromosome 11 of 24, 3.133 mins elapsed.
+
+2025-12-13 12:25:00.986047 : (ATAC_HIP02_frozen : 1 of 3) .tmpToArrow Fragments-Chr-(1 of 24)-chr1, Class = IRanges
+
+(ATAC_HIP02_frozen : 1 of 3) .tmpToArrow Fragments-Chr-(1 of 24)-chr1: length = 2807002
+IRanges object with 6 ranges and 1 metadata column:
+          start       end     width |                 RG
+      <integer> <integer> <integer> |              <Rle>
+  [1]    827487    827511        25 | CATTGGACAGCAACAG-1
+  [2]    904527    904693       167 | CATTGGACAGCAACAG-1
+  [3]    904743    904825        83 | CATTGGACAGCAACAG-1
+  [4]    928749    928878       130 | CATTGGACAGCAACAG-1
+  [5]    954454    954660       207 | CATTGGACAGCAACAG-1
+  [6]    958934    959240       307 | CATTGGACAGCAACAG-1
+
+
+
+2025-12-13 12:25:00.990846 : (ATAC_HIP02_frozen : 1 of 3) .tmpToArrow Barcodes-Chr-(1 of 24)-chr1, Class = data.frame
+(ATAC_HIP02_frozen : 1 of 3) .tmpToArrow Barcodes-Chr-(1 of 24)-chr1: nRows = 6412, nCols = 1
+                  bc
+1 CATTGGACAGCAACAG-1
+2 GCGGGTTAGGCCTCTG-1
+3 CGTAAACTCGTTGTAG-1
+4 GTTCAAGTCTGGCCAG-1
+5 TGCTTTAGTATCTGCA-1
+6 CTAGGGCTCCAATAGC-1
+
+
+2025-12-13 12:25:01.213267 : (ATAC_555_2 : 2 of 3) Adding Chromosome 12 of 24, 3.137 mins elapsed.
+2025-12-13 12:25:01.470805 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 3 of 24, 3.141 mins elapsed.
+2025-12-13 12:25:01.74757 : (ATAC_557 : 3 of 3) Adding Chromosome 21 of 24, 3.145 mins elapsed.
+2025-12-13 12:25:02.433076 : (ATAC_557 : 3 of 3) Adding Chromosome 22 of 24, 3.157 mins elapsed.
+2025-12-13 12:25:02.640943 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 4 of 24, 3.16 mins elapsed.
+2025-12-13 12:25:04.315352 : (ATAC_555_2 : 2 of 3) Adding Chromosome 13 of 24, 3.188 mins elapsed.
+2025-12-13 12:25:04.734149 : (ATAC_557 : 3 of 3) Adding Chromosome 23 of 24, 3.195 mins elapsed.
+2025-12-13 12:25:04.814117 : (ATAC_555_2 : 2 of 3) Adding Chromosome 14 of 24, 3.197 mins elapsed.
+2025-12-13 12:25:05.219092 : (ATAC_557 : 3 of 3) Adding Chromosome 24 of 24, 3.203 mins elapsed.
+2025-12-13 12:25:06.03176 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 5 of 24, 3.217 mins elapsed.
+2025-12-13 12:25:06.284683 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 6 of 24, 3.221 mins elapsed.
+2025-12-13 12:25:06.365124 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 7 of 24, 3.222 mins elapsed.
+2025-12-13 12:25:06.433383 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 8 of 24, 3.224 mins elapsed.
+2025-12-13 12:25:06.510586 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 9 of 24, 3.225 mins elapsed.
+2025-12-13 12:25:06.571131 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 10 of 24, 3.226 mins elapsed.
+2025-12-13 12:25:07.433655 : (ATAC_555_2 : 2 of 3) Adding Chromosome 15 of 24, 3.24 mins elapsed.
+2025-12-13 12:25:07.906846 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 11 of 24, 3.248 mins elapsed.
+2025-12-13 12:25:08.003879 : (ATAC_557 : 3 of 3) Parallel Hdf5 Linkage Arrow File, 3.25 mins elapsed.
+2025-12-13 12:25:08.283387 : (ATAC_557 : 3 of 3) Successful creation of Arrow File, 3.254 mins elapsed.
+2025-12-13 12:25:08.423654 : (ATAC_555_2 : 2 of 3) Adding Chromosome 16 of 24, 3.257 mins elapsed.
+2025-12-13 12:25:09.119121 : (ATAC_557 : 3 of 3) Adding Fragment Summary, 3.268 mins elapsed.
+2025-12-13 12:25:09.940451 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 12 of 24, 3.282 mins elapsed.
+2025-12-13 12:25:10.316102 : (ATAC_555_2 : 2 of 3) Adding Chromosome 17 of 24, 3.288 mins elapsed.
+2025-12-13 12:25:11.190546 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 13 of 24, 3.303 mins elapsed.
+2025-12-13 12:25:11.198842 : (ATAC_555_2 : 2 of 3) Adding Chromosome 18 of 24, 3.303 mins elapsed.
+2025-12-13 12:25:11.673435 : (ATAC_557 : 3 of 3) Plotting Fragment Size Distribution, 3.311 mins elapsed.
+2025-12-13 12:25:12.752029 : (ATAC_557 : 3 of 3) Computing TSS Enrichment Scores, 3.329 mins elapsed.
+2025-12-13 12:25:13.176441 : (ATAC_555_2 : 2 of 3) Adding Chromosome 19 of 24, 3.336 mins elapsed.
+2025-12-13 12:25:13.352036 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 14 of 24, 3.339 mins elapsed.
+2025-12-13 12:25:13.995814 : (ATAC_555_2 : 2 of 3) Adding Chromosome 20 of 24, 3.35 mins elapsed.
+2025-12-13 12:25:14.216201 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 15 of 24, 3.353 mins elapsed.
+2025-12-13 12:25:17.043199 : (ATAC_555_2 : 2 of 3) Adding Chromosome 21 of 24, 3.4 mins elapsed.
+2025-12-13 12:25:17.522804 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 16 of 24, 3.408 mins elapsed.
+2025-12-13 12:25:17.561861 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 17 of 24, 3.409 mins elapsed.
+2025-12-13 12:25:18.199543 : (ATAC_555_2 : 2 of 3) Adding Chromosome 22 of 24, 3.42 mins elapsed.
+2025-12-13 12:25:20.689423 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 18 of 24, 3.461 mins elapsed.
+2025-12-13 12:25:20.811811 : (ATAC_555_2 : 2 of 3) Adding Chromosome 23 of 24, 3.463 mins elapsed.
+2025-12-13 12:25:21.006227 : (ATAC_555_2 : 2 of 3) Adding Chromosome 24 of 24, 3.466 mins elapsed.
+2025-12-13 12:25:21.020232 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 19 of 24, 3.467 mins elapsed.
+2025-12-13 12:25:23.726028 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 20 of 24, 3.512 mins elapsed.
+2025-12-13 12:25:24.598509 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 21 of 24, 3.526 mins elapsed.
+2025-12-13 12:25:24.67948 : (ATAC_555_2 : 2 of 3) Parallel Hdf5 Linkage Arrow File, 3.528 mins elapsed.
+2025-12-13 12:25:24.962561 : (ATAC_555_2 : 2 of 3) Successful creation of Arrow File, 3.532 mins elapsed.
+2025-12-13 12:25:26.069627 : (ATAC_555_2 : 2 of 3) Adding Fragment Summary, 3.551 mins elapsed.
+2025-12-13 12:25:26.90386 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 22 of 24, 3.565 mins elapsed.
+2025-12-13 12:25:27.194625 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 23 of 24, 3.57 mins elapsed.
+2025-12-13 12:25:27.255714 : (ATAC_HIP02_frozen : 1 of 3) Adding Chromosome 24 of 24, 3.571 mins elapsed.
+2025-12-13 12:25:29.173978 : (ATAC_HIP02_frozen : 1 of 3) Parallel Hdf5 Linkage Arrow File, 3.603 mins elapsed.
+2025-12-13 12:25:29.375534 : (ATAC_HIP02_frozen : 1 of 3) Successful creation of Arrow File, 3.606 mins elapsed.
+2025-12-13 12:25:29.844112 : (ATAC_555_2 : 2 of 3) Plotting Fragment Size Distribution, 3.614 mins elapsed.
+2025-12-13 12:25:30.263799 : (ATAC_HIP02_frozen : 1 of 3) Adding Fragment Summary, 3.621 mins elapsed.
+2025-12-13 12:25:30.822283 : (ATAC_555_2 : 2 of 3) Computing TSS Enrichment Scores, 3.63 mins elapsed.
+2025-12-13 12:25:37.666296 : (ATAC_HIP02_frozen : 1 of 3) Plotting Fragment Size Distribution, 3.744 mins elapsed.
+2025-12-13 12:25:38.938172 : (ATAC_HIP02_frozen : 1 of 3) Computing TSS Enrichment Scores, 3.765 mins elapsed.
+2025-12-13 12:25:56.918258 : (ATAC_557 : 3 of 3) Computed TSS Scores!, 0.736 mins elapsed.
+2025-12-13 12:25:56.927934 : (ATAC_557 : 3 of 3) CellStats : Number of Cells Pass Filter = 851 , 4.065 mins elapsed.
+2025-12-13 12:25:56.930523 : (ATAC_557 : 3 of 3) CellStats : Median Frags = 6571 , 4.065 mins elapsed.
+2025-12-13 12:25:56.932755 : (ATAC_557 : 3 of 3) CellStats : Median TSS Enrichment = 9.024 , 4.065 mins elapsed.
+2025-12-13 12:25:56.933156 : (ATAC_557 : 3 of 3) Plotting TSS Enrichment Scores, 4.065 mins elapsed.
+2025-12-13 12:25:57.71192 : (ATAC_557 : 3 of 3) Adding Metadata to Fragments, 4.078 mins elapsed.
+2025-12-13 12:25:58.594079 : (ATAC_557 : 3 of 3) Adding Additional Feature Counts!, 4.093 mins elapsed.
+2025-12-13 12:26:19.142981 : (ATAC_555_2 : 2 of 3) Computed TSS Scores!, 0.805 mins elapsed.
+2025-12-13 12:26:19.15342 : (ATAC_555_2 : 2 of 3) CellStats : Number of Cells Pass Filter = 1227 , 4.436 mins elapsed.
+2025-12-13 12:26:19.156204 : (ATAC_555_2 : 2 of 3) CellStats : Median Frags = 8550 , 4.436 mins elapsed.
+2025-12-13 12:26:19.158594 : (ATAC_555_2 : 2 of 3) CellStats : Median TSS Enrichment = 9.534 , 4.436 mins elapsed.
+2025-12-13 12:26:19.159021 : (ATAC_555_2 : 2 of 3) Plotting TSS Enrichment Scores, 4.436 mins elapsed.
+2025-12-13 12:26:19.746011 : (ATAC_HIP02_frozen : 1 of 3) Computed TSS Scores!, 0.68 mins elapsed.
+2025-12-13 12:26:19.755366 : (ATAC_HIP02_frozen : 1 of 3) CellStats : Number of Cells Pass Filter = 6412 , 4.446 mins elapsed.
+2025-12-13 12:26:19.757864 : (ATAC_HIP02_frozen : 1 of 3) CellStats : Median Frags = 3249 , 4.446 mins elapsed.
+2025-12-13 12:26:19.760387 : (ATAC_HIP02_frozen : 1 of 3) CellStats : Median TSS Enrichment = 9.691 , 4.446 mins elapsed.
+2025-12-13 12:26:19.760833 : (ATAC_HIP02_frozen : 1 of 3) Plotting TSS Enrichment Scores, 4.446 mins elapsed.
+2025-12-13 12:26:19.876263 : (ATAC_555_2 : 2 of 3) Adding Metadata to Fragments, 4.448 mins elapsed.
+2025-12-13 12:26:20.677468 : (ATAC_555_2 : 2 of 3) Adding Additional Feature Counts!, 4.461 mins elapsed.
+2025-12-13 12:26:21.036618 : (ATAC_HIP02_frozen : 1 of 3) Adding Metadata to Fragments, 4.467 mins elapsed.
+2025-12-13 12:26:21.953992 : (ATAC_HIP02_frozen : 1 of 3) Adding Additional Feature Counts!, 4.482 mins elapsed.
+2025-12-13 12:26:52.205937 : (ATAC_557 : 3 of 3) Finished Adding Additional Feature Counts!, 4.986 mins elapsed.
+
+2025-12-13 12:26:52.207648 : (ATAC_557 : 3 of 3) Metadata, Class = DFrame
+DataFrame with 851 rows and 12 columns
+                 cellNames    nFrags nMonoFrags  nDiFrags nMultiFrags TSSEnrichment ReadsInTSS      Keep ReadsInPromoter
+               <character> <numeric>  <numeric> <numeric>   <numeric>     <numeric>  <numeric> <numeric>       <numeric>
+1   ATAC_557#TTAGGTGGTCA..     43964      19529     21551        2884         9.673      10332         1           10841
+2   ATAC_557#AGCTGGCCATC..     25549      11557     13284         708         9.533       5045         1            5303
+3   ATAC_557#AGATAGAAGTC..     23154      10314     11818        1022         8.353       4602         1            5068
+4   ATAC_557#GAAGTGGCACA..     21983       8754     11900        1329         8.024       3947         1            4369
+5   ATAC_557#AAACGAACAAG..     21739      10062     10710         967         9.575       5725         1            5805
+...                    ...       ...        ...       ...         ...           ...        ...       ...             ...
+847 ATAC_557#AAAGATGAGCT..      3200       1315      1693         192         8.300        700         1             714
+848 ATAC_557#GAAGTGGGTTC..      3195       1250      1757         188         9.109        506         1             585
+849 ATAC_557#TACCTATGTTG..      3191       1358      1645         188         8.559        778         1             760
+850 ATAC_557#GACTAGTGTTT..      3190       1461      1574         155         8.223        789         1             850
+851 ATAC_557#TATCGAGAGAC..      3166       1214      1861          91         8.860        434         1             367
+    PromoterRatio ReadsInBlacklist BlacklistRatio
+        <numeric>        <numeric>      <numeric>
+1       0.1232941              478     0.00543627
+2       0.1037810              319     0.00624291
+3       0.1094411              256     0.00552820
+4       0.0993722              240     0.00545876
+5       0.1335158              253     0.00581903
+...           ...              ...            ...
+847     0.1115625               29     0.00453125
+848     0.0915493               30     0.00469484
+849     0.1190849               38     0.00595425
+850     0.1332288               44     0.00689655
+851     0.0579596               27     0.00426406
+
+2025-12-13 12:26:52.276764 : (ATAC_557 : 3 of 3) Removing Fragments from Filtered Cells, 4.988 mins elapsed.
+2025-12-13 12:26:52.282681 : (ATAC_557 : 3 of 3) Creating Filtered Arrow File, 4.988 mins elapsed.
+
+2025-12-13 12:26:52.761413 : (ATAC_557 : 3 of 3) .filterCellsFromArrow Fragments-Chr-(1 of 24)-chr1, Class = GRanges
+GRanges object with 558726 ranges and 1 metadata column:
+           seqnames              ranges strand |                     RG
+              <Rle>           <IRanges>  <Rle> |                  <Rle>
+       [1]     chr1       817313-817346      * | ATAC_557#TTAGGTGGTCA..
+       [2]     chr1       827420-827456      * | ATAC_557#TTAGGTGGTCA..
+       [3]     chr1       959362-959423      * | ATAC_557#TTAGGTGGTCA..
+       [4]     chr1       967057-967258      * | ATAC_557#TTAGGTGGTCA..
+       [5]     chr1     1013227-1013420      * | ATAC_557#TTAGGTGGTCA..
+       ...      ...                 ...    ... .                    ...
+  [558722]     chr1 244854871-244855193      * | ATAC_557#TATCGAGAGAC..
+  [558723]     chr1 245997482-245997672      * | ATAC_557#TATCGAGAGAC..
+  [558724]     chr1 247328933-247328970      * | ATAC_557#TATCGAGAGAC..
+  [558725]     chr1 247485834-247486025      * | ATAC_557#TATCGAGAGAC..
+  [558726]     chr1 248276605-248276799      * | ATAC_557#TATCGAGAGAC..
+  -------
+  seqinfo: 1 sequence from an unspecified genome; no seqlengths
+
+
+2025-12-13 12:26:52.780731 : (ATAC_557 : 3 of 3) .filterCellsFromArrow Barcodes-Chr-(1 of 24)-chr1, Class = data.frame
+(ATAC_557 : 3 of 3) .filterCellsFromArrow Barcodes-Chr-(1 of 24)-chr1: nRows = 851, nCols = 1
+                           bc
+1 ATAC_557#TTAGGTGGTCACAGGA-1
+2 ATAC_557#AGCTGGCCATCACAAC-1
+3 ATAC_557#AGATAGAAGTCGTGAG-1
+4 ATAC_557#GAAGTGGCACATAAAG-1
+5 ATAC_557#AAACGAACAAGCGACA-1
+6 ATAC_557#TGCACCTTCTCTGACC-1
+
+
+2025-12-13 12:27:24.239236 : (ATAC_HIP02_frozen : 1 of 3) Finished Adding Additional Feature Counts!, 5.52 mins elapsed.
+
+2025-12-13 12:27:24.240762 : (ATAC_HIP02_frozen : 1 of 3) Metadata, Class = DFrame
+DataFrame with 6412 rows and 12 columns
+                  cellNames    nFrags nMonoFrags  nDiFrags nMultiFrags TSSEnrichment ReadsInTSS      Keep ReadsInPromoter
+                <character> <numeric>  <numeric> <numeric>   <numeric>     <numeric>  <numeric> <numeric>       <numeric>
+1    ATAC_HIP02_frozen#CA..     47827      18671     28117        1039        11.071      11741         1           11617
+2    ATAC_HIP02_frozen#GC..     34696      12734     21422         540        11.280       9114         1            8554
+3    ATAC_HIP02_frozen#CG..     26957      13515     11938        1504        12.678      11518         1           11122
+4    ATAC_HIP02_frozen#GT..     25260      12621     11166        1473        12.247      10409         1           10457
+5    ATAC_HIP02_frozen#TG..     23851       8960     14428         463        11.153       6460         1            6225
+...                     ...       ...        ...       ...         ...           ...        ...       ...             ...
+6408 ATAC_HIP02_frozen#TA..      1403        545       783          75        12.345        293         1             270
+6409 ATAC_HIP02_frozen#CG..      1402        523       801          78        10.957        332         1             314
+6410 ATAC_HIP02_frozen#GC..      1395        600       721          74        12.447        352         1             327
+6411 ATAC_HIP02_frozen#AT..      1387        554       792          41         8.079        204         1             247
+6412 ATAC_HIP02_frozen#GA..      1387        526       797          64        13.309        289         1             284
+     PromoterRatio ReadsInBlacklist BlacklistRatio
+         <numeric>        <numeric>      <numeric>
+1         0.121448              527     0.00550944
+2         0.123271              331     0.00477000
+3         0.206292              308     0.00571280
+4         0.206987              237     0.00469121
+5         0.130498              245     0.00513605
+...            ...              ...            ...
+6408     0.0962224               10     0.00356379
+6409     0.1119829               40     0.01426534
+6410     0.1172043                8     0.00286738
+6411     0.0890411               20     0.00720981
+6412     0.1023792               12     0.00432588
+
+2025-12-13 12:27:24.377239 : (ATAC_555_2 : 2 of 3) Finished Adding Additional Feature Counts!, 5.523 mins elapsed.
+
+2025-12-13 12:27:24.378516 : (ATAC_555_2 : 2 of 3) Metadata, Class = DFrame
+DataFrame with 1227 rows and 12 columns
+                  cellNames    nFrags nMonoFrags  nDiFrags nMultiFrags TSSEnrichment ReadsInTSS      Keep ReadsInPromoter
+                <character> <numeric>  <numeric> <numeric>   <numeric>     <numeric>  <numeric> <numeric>       <numeric>
+1    ATAC_555_2#TGCCTCACA..     51170      20660     27362        3148         9.542      10100         1           10288
+2    ATAC_555_2#GCGATCGAG..     27023      10585     15530         908         8.109       4136         1            4832
+3    ATAC_555_2#GAGACTTAG..     26248      10682     13738        1828         9.137       6432         1            6784
+4    ATAC_555_2#AAGGAGCCA..     23002      10355     11202        1445        10.691       6117         1            6024
+5    ATAC_555_2#TTAGCTTCA..     22617       9331     12344         942         8.615       4068         1            4196
+...                     ...       ...        ...       ...         ...           ...        ...       ...             ...
+1223 ATAC_555_2#CGCTATCGT..      6326       2647      3348         331        12.494       1937         1            1858
+1224 ATAC_555_2#CATTCCGCA..      6319       2524      3468         327        10.071       1424         1            1442
+1225 ATAC_555_2#GTGTCCTTC..      6319       2146      3807         366         8.559       1046         1            1078
+1226 ATAC_555_2#TTGAGCACA..      6318       2445      3511         362         8.724       1357         1            1500
+1227 ATAC_555_2#TTGCTATTC..      6318       2716      3162         440        11.082       1651         1            1583
+     PromoterRatio ReadsInBlacklist BlacklistRatio
+         <numeric>        <numeric>      <numeric>
+1        0.1005277              607     0.00593121
+2        0.0894053              328     0.00606890
+3        0.1292289              270     0.00514325
+4        0.1309451              328     0.00712981
+5        0.0927621              189     0.00417827
+...            ...              ...            ...
+1223     0.1468543               87     0.00687638
+1224     0.1141003              100     0.00791264
+1225     0.0852983               85     0.00672575
+1226     0.1187085               71     0.00561887
+1227     0.1252770               62     0.00490662
+
+2025-12-13 12:27:24.436908 : (ATAC_HIP02_frozen : 1 of 3) Removing Fragments from Filtered Cells, 5.524 mins elapsed.
+2025-12-13 12:27:24.446035 : (ATAC_HIP02_frozen : 1 of 3) Creating Filtered Arrow File, 5.524 mins elapsed.
+2025-12-13 12:27:24.460378 : (ATAC_555_2 : 2 of 3) Removing Fragments from Filtered Cells, 5.524 mins elapsed.
+2025-12-13 12:27:24.467142 : (ATAC_555_2 : 2 of 3) Creating Filtered Arrow File, 5.524 mins elapsed.
+
+2025-12-13 12:27:25.235964 : (ATAC_555_2 : 2 of 3) .filterCellsFromArrow Fragments-Chr-(1 of 24)-chr1, Class = GRanges
+GRanges object with 1033939 ranges and 1 metadata column:
+            seqnames              ranges strand |                     RG
+               <Rle>           <IRanges>  <Rle> |                  <Rle>
+        [1]     chr1       778669-778710      * | ATAC_555_2#TGCCTCACA..
+        [2]     chr1       827476-827540      * | ATAC_555_2#TGCCTCACA..
+        [3]     chr1       921257-921313      * | ATAC_555_2#TGCCTCACA..
+        [4]     chr1       924774-924815      * | ATAC_555_2#TGCCTCACA..
+        [5]     chr1       985830-986200      * | ATAC_555_2#TGCCTCACA..
+        ...      ...                 ...    ... .                    ...
+  [1033935]     chr1 246021512-246021846      * | ATAC_555_2#TTGCTATTC..
+  [1033936]     chr1 247104396-247104506      * | ATAC_555_2#TTGCTATTC..
+  [1033937]     chr1 247357693-247357753      * | ATAC_555_2#TTGCTATTC..
+  [1033938]     chr1 247415427-247415598      * | ATAC_555_2#TTGCTATTC..
+  [1033939]     chr1 247858889-247859164      * | ATAC_555_2#TTGCTATTC..
+  -------
+  seqinfo: 1 sequence from an unspecified genome; no seqlengths
+
+
+2025-12-13 12:27:25.261136 : (ATAC_555_2 : 2 of 3) .filterCellsFromArrow Barcodes-Chr-(1 of 24)-chr1, Class = data.frame
+(ATAC_555_2 : 2 of 3) .filterCellsFromArrow Barcodes-Chr-(1 of 24)-chr1: nRows = 1227, nCols = 1
+                             bc
+1 ATAC_555_2#TGCCTCACACCGTCTT-1
+2 ATAC_555_2#GCGATCGAGTAGGAAG-1
+3 ATAC_555_2#GAGACTTAGGCGCTTC-1
+4 ATAC_555_2#AAGGAGCCACGATATC-1
+5 ATAC_555_2#TTAGCTTCATTTGGTG-1
+6 ATAC_555_2#ATGTTTCCAGCGTACC-1
+
+
+
+2025-12-13 12:27:27.845505 : (ATAC_HIP02_frozen : 1 of 3) .filterCellsFromArrow Fragments-Chr-(1 of 24)-chr1, Class = GRanges
+GRanges object with 2807002 ranges and 1 metadata column:
+            seqnames              ranges strand |                     RG
+               <Rle>           <IRanges>  <Rle> |                  <Rle>
+        [1]     chr1       827487-827511      * | ATAC_HIP02_frozen#CA..
+        [2]     chr1       904527-904693      * | ATAC_HIP02_frozen#CA..
+        [3]     chr1       904743-904825      * | ATAC_HIP02_frozen#CA..
+        [4]     chr1       928749-928878      * | ATAC_HIP02_frozen#CA..
+        [5]     chr1       954454-954660      * | ATAC_HIP02_frozen#CA..
+        ...      ...                 ...    ... .                    ...
+  [2806998]     chr1 240160105-240160288      * | ATAC_HIP02_frozen#GA..
+  [2806999]     chr1 240281813-240281978      * | ATAC_HIP02_frozen#GA..
+  [2807000]     chr1 240332036-240332205      * | ATAC_HIP02_frozen#GA..
+  [2807001]     chr1 242493569-242493764      * | ATAC_HIP02_frozen#GA..
+  [2807002]     chr1 248137274-248137457      * | ATAC_HIP02_frozen#GA..
+  -------
+  seqinfo: 1 sequence from an unspecified genome; no seqlengths
+
+
+2025-12-13 12:27:27.868515 : (ATAC_HIP02_frozen : 1 of 3) .filterCellsFromArrow Barcodes-Chr-(1 of 24)-chr1, Class = data.frame
+(ATAC_HIP02_frozen : 1 of 3) .filterCellsFromArrow Barcodes-Chr-(1 of 24)-chr1: nRows = 6412, nCols = 1
+                                    bc
+1 ATAC_HIP02_frozen#CATTGGACAGCAACAG-1
+2 ATAC_HIP02_frozen#GCGGGTTAGGCCTCTG-1
+3 ATAC_HIP02_frozen#CGTAAACTCGTTGTAG-1
+4 ATAC_HIP02_frozen#GTTCAAGTCTGGCCAG-1
+5 ATAC_HIP02_frozen#TGCTTTAGTATCTGCA-1
+6 ATAC_HIP02_frozen#CTAGGGCTCCAATAGC-1
+
+
+2025-12-13 12:27:29.492137 : (ATAC_557 : 3 of 3) Finished Constructing Filtered Arrow File!, 5.608 mins elapsed.
+2025-12-13 12:27:29.666461 : (ATAC_557 : 3 of 3) Adding TileMatrix!, 5.611 mins elapsed.
+
+2025-12-13 12:27:34.58623 : ATAC_557 .addTileMat FeatureDF, Class = DFrame
+DataFrame with 6062095 rows and 3 columns
+           seqnames       idx     start
+        <character> <integer> <numeric>
+1              chr1         1         0
+2              chr1         2       500
+3              chr1         3      1000
+4              chr1         4      1500
+5              chr1         5      2000
+...             ...       ...       ...
+6062091        chrX    312078 156038500
+6062092        chrX    312079 156039000
+6062093        chrX    312080 156039500
+6062094        chrX    312081 156040000
+6062095        chrX    312082 156040500
+
+2025-12-13 12:27:44.944076 : Adding TileMatrix to ATAC_557 for Chr (1 of 23)!, 0.254 mins elapsed.
+
+2025-12-13 12:27:45.021289 : NTiles_TileMatrix_1_chr1, Class = numeric
+
+NTiles_TileMatrix_1_chr1: length = 1
+  chr1 
+497913 
+
+
+
+2025-12-13 12:27:45.022681 : NCells_TileMatrix_1_chr1, Class = integer
+
+NCells_TileMatrix_1_chr1: length = 1
+[1] 851
+
+
+
+2025-12-13 12:27:45.023896 : MinTile_TileMatrix_1_chr1, Class = numeric
+
+MinTile_TileMatrix_1_chr1: length = 1
+[1] 21
+
+
+
+2025-12-13 12:27:45.025867 : MaxTile_TileMatrix_1_chr1, Class = numeric
+
+MaxTile_TileMatrix_1_chr1: length = 1
+[1] 497893
+
+
+
+2025-12-13 12:27:45.033888 : MinCell_TileMatrix_1_chr1, Class = integer
+
+MinCell_TileMatrix_1_chr1: length = 1
+[1] 1
+
+
+
+2025-12-13 12:27:45.035784 : MaxCell_TileMatrix_1_chr1, Class = integer
+
+MaxCell_TileMatrix_1_chr1: length = 1
+[1] 851
+
+
+2025-12-13 12:27:48.236306 : Adding TileMatrix to ATAC_557 for Chr (2 of 23)!, 0.309 mins elapsed.
+
+2025-12-13 12:27:48.308646 : NTiles_TileMatrix_2_chr2, Class = numeric
+
+NTiles_TileMatrix_2_chr2: length = 1
+  chr2 
+484388 
+
+
+
+2025-12-13 12:27:48.309661 : NCells_TileMatrix_2_chr2, Class = integer
+
+NCells_TileMatrix_2_chr2: length = 1
+[1] 851
+
+
+
+2025-12-13 12:27:48.310563 : MinTile_TileMatrix_2_chr2, Class = numeric
+
+MinTile_TileMatrix_2_chr2: length = 1
+[1] 21
+
+
+
+2025-12-13 12:27:48.31192 : MaxTile_TileMatrix_2_chr2, Class = numeric
+
+MaxTile_TileMatrix_2_chr2: length = 1
+[1] 484298
+
+
+
+2025-12-13 12:27:48.316774 : MinCell_TileMatrix_2_chr2, Class = integer
+
+MinCell_TileMatrix_2_chr2: length = 1
+[1] 1
+
+
+
+2025-12-13 12:27:48.317718 : MaxCell_TileMatrix_2_chr2, Class = integer
+
+MaxCell_TileMatrix_2_chr2: length = 1
+[1] 851
+
+
+2025-12-13 12:27:51.277015 : Adding TileMatrix to ATAC_557 for Chr (3 of 23)!, 0.359 mins elapsed.
+
+2025-12-13 12:27:51.33926 : NTiles_TileMatrix_3_chr3, Class = numeric
+
+NTiles_TileMatrix_3_chr3: length = 1
+  chr3 
+396592 
+
+
+
+2025-12-13 12:27:51.340239 : NCells_TileMatrix_3_chr3, Class = integer
+
+NCells_TileMatrix_3_chr3: length = 1
+[1] 851
+
+
+
+2025-12-13 12:27:51.341113 : MinTile_TileMatrix_3_chr3, Class = numeric
+
+MinTile_TileMatrix_3_chr3: length = 1
+[1] 21
+
+
+
+2025-12-13 12:27:51.342391 : MaxTile_TileMatrix_3_chr3, Class = numeric
+
+MaxTile_TileMatrix_3_chr3: length = 1
+[1] 396348
+
+
+
+2025-12-13 12:27:51.346397 : MinCell_TileMatrix_3_chr3, Class = integer
+
+MinCell_TileMatrix_3_chr3: length = 1
+[1] 1
+
+
+
+2025-12-13 12:27:51.347281 : MaxCell_TileMatrix_3_chr3, Class = integer
+
+MaxCell_TileMatrix_3_chr3: length = 1
+[1] 851
+
+
+
+2025-12-13 12:27:52.848418 : (ATAC_HIP02_frozen : 1 of 3) detected 0 Fragments for chr6
+2025-12-13 12:27:52.948666 : (ATAC_555_2 : 2 of 3) Finished Constructing Filtered Arrow File!, 5.999 mins elapsed.
+2025-12-13 12:27:53.046426 : (ATAC_555_2 : 2 of 3) Adding TileMatrix!, 6 mins elapsed.
+
+2025-12-13 12:27:53.692818 : (ATAC_HIP02_frozen : 1 of 3) detected 0 Fragments for chr7
+2025-12-13 12:27:54.247526 : Adding TileMatrix to ATAC_557 for Chr (4 of 23)!, 0.409 mins elapsed.
+
+2025-12-13 12:27:54.308415 : NTiles_TileMatrix_4_chr4, Class = numeric
+
+NTiles_TileMatrix_4_chr4: length = 1
+  chr4 
+380430 
+
+
+
+2025-12-13 12:27:54.309344 : NCells_TileMatrix_4_chr4, Class = integer
+
+NCells_TileMatrix_4_chr4: length = 1
+[1] 851
+
+
+
+2025-12-13 12:27:54.310122 : MinTile_TileMatrix_4_chr4, Class = numeric
+
+MinTile_TileMatrix_4_chr4: length = 1
+[1] 21
+
+
+
+2025-12-13 12:27:54.311246 : MaxTile_TileMatrix_4_chr4, Class = numeric
+
+MaxTile_TileMatrix_4_chr4: length = 1
+[1] 380361
+
+
+
+2025-12-13 12:27:54.314568 : MinCell_TileMatrix_4_chr4, Class = integer
+
+MinCell_TileMatrix_4_chr4: length = 1
+[1] 1
+
+
+
+2025-12-13 12:27:54.315439 : MaxCell_TileMatrix_4_chr4, Class = integer
+
+MaxCell_TileMatrix_4_chr4: length = 1
+[1] 851
+
+
+
+2025-12-13 12:27:54.543211 : (ATAC_HIP02_frozen : 1 of 3) detected 0 Fragments for chr8
+
+2025-12-13 12:27:55.416301 : (ATAC_HIP02_frozen : 1 of 3) detected 0 Fragments for chr9
+
+2025-12-13 12:27:56.254556 : (ATAC_HIP02_frozen : 1 of 3) detected 0 Fragments for chrX
+
+2025-12-13 12:27:56.42622 : ATAC_555_2 .addTileMat FeatureDF, Class = DFrame
+DataFrame with 6062095 rows and 3 columns
+           seqnames       idx     start
+        <character> <integer> <numeric>
+1              chr1         1         0
+2              chr1         2       500
+3              chr1         3      1000
+4              chr1         4      1500
+5              chr1         5      2000
+...             ...       ...       ...
+6062091        chrX    312078 156038500
+6062092        chrX    312079 156039000
+6062093        chrX    312080 156039500
+6062094        chrX    312081 156040000
+6062095        chrX    312082 156040500
+
+2025-12-13 12:27:56.976476 : Adding TileMatrix to ATAC_557 for Chr (5 of 23)!, 0.454 mins elapsed.
+
+2025-12-13 12:27:57.022453 : (ATAC_HIP02_frozen : 1 of 3) detected 0 Fragments for chrY
+
+2025-12-13 12:27:57.038032 : NTiles_TileMatrix_5_chr5, Class = numeric
+
+NTiles_TileMatrix_5_chr5: length = 1
+  chr5 
+363077 
+
+
+
+2025-12-13 12:27:57.039371 : NCells_TileMatrix_5_chr5, Class = integer
+
+NCells_TileMatrix_5_chr5: length = 1
+[1] 851
+
+
+
+2025-12-13 12:27:57.040258 : MinTile_TileMatrix_5_chr5, Class = numeric
+
+MinTile_TileMatrix_5_chr5: length = 1
+[1] 24
+
+
+
+2025-12-13 12:27:57.041591 : MaxTile_TileMatrix_5_chr5, Class = numeric
+
+MaxTile_TileMatrix_5_chr5: length = 1
+[1] 362717
+
+
+
+2025-12-13 12:27:57.045316 : MinCell_TileMatrix_5_chr5, Class = integer
+
+MinCell_TileMatrix_5_chr5: length = 1
+[1] 1
+
+
+
+2025-12-13 12:27:57.046256 : MaxCell_TileMatrix_5_chr5, Class = integer
+
+MaxCell_TileMatrix_5_chr5: length = 1
+[1] 851
+
+
+2025-12-13 12:27:57.733375 : (ATAC_HIP02_frozen : 1 of 3) Finished Constructing Filtered Arrow File!, 6.079 mins elapsed.
+2025-12-13 12:27:57.843177 : (ATAC_HIP02_frozen : 1 of 3) Adding TileMatrix!, 6.08 mins elapsed.
+2025-12-13 12:27:59.339688 : Adding TileMatrix to ATAC_557 for Chr (6 of 23)!, 0.494 mins elapsed.
+
+2025-12-13 12:27:59.425046 : NTiles_TileMatrix_6_chr6, Class = numeric
+
+NTiles_TileMatrix_6_chr6: length = 1
+  chr6 
+341612 
+
+
+
+2025-12-13 12:27:59.426004 : NCells_TileMatrix_6_chr6, Class = integer
+
+NCells_TileMatrix_6_chr6: length = 1
+[1] 851
+
+
+
+2025-12-13 12:27:59.426844 : MinTile_TileMatrix_6_chr6, Class = numeric
+
+MinTile_TileMatrix_6_chr6: length = 1
+[1] 182
+
+
+
+2025-12-13 12:27:59.428018 : MaxTile_TileMatrix_6_chr6, Class = numeric
+
+MaxTile_TileMatrix_6_chr6: length = 1
+[1] 341465
+
+
+
+2025-12-13 12:27:59.431855 : MinCell_TileMatrix_6_chr6, Class = integer
+
+MinCell_TileMatrix_6_chr6: length = 1
+[1] 1
+
+
+
+2025-12-13 12:27:59.432846 : MaxCell_TileMatrix_6_chr6, Class = integer
+
+MaxCell_TileMatrix_6_chr6: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:00.869261 : ATAC_HIP02_frozen .addTileMat FeatureDF, Class = DFrame
+DataFrame with 6062095 rows and 3 columns
+           seqnames       idx     start
+        <character> <integer> <numeric>
+1              chr1         1         0
+2              chr1         2       500
+3              chr1         3      1000
+4              chr1         4      1500
+5              chr1         5      2000
+...             ...       ...       ...
+6062091        chrX    312078 156038500
+6062092        chrX    312079 156039000
+6062093        chrX    312080 156039500
+6062094        chrX    312081 156040000
+6062095        chrX    312082 156040500
+
+2025-12-13 12:28:01.643335 : Adding TileMatrix to ATAC_557 for Chr (7 of 23)!, 0.532 mins elapsed.
+
+2025-12-13 12:28:01.698265 : NTiles_TileMatrix_7_chr7, Class = numeric
+
+NTiles_TileMatrix_7_chr7: length = 1
+  chr7 
+318692 
+
+
+
+2025-12-13 12:28:01.699201 : NCells_TileMatrix_7_chr7, Class = integer
+
+NCells_TileMatrix_7_chr7: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:01.700075 : MinTile_TileMatrix_7_chr7, Class = numeric
+
+MinTile_TileMatrix_7_chr7: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:01.701223 : MaxTile_TileMatrix_7_chr7, Class = numeric
+
+MaxTile_TileMatrix_7_chr7: length = 1
+[1] 318672
+
+
+
+2025-12-13 12:28:01.704685 : MinCell_TileMatrix_7_chr7, Class = integer
+
+MinCell_TileMatrix_7_chr7: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:01.705581 : MaxCell_TileMatrix_7_chr7, Class = integer
+
+MaxCell_TileMatrix_7_chr7: length = 1
+[1] 851
+
+
+2025-12-13 12:28:03.830735 : Adding TileMatrix to ATAC_557 for Chr (8 of 23)!, 0.569 mins elapsed.
+
+2025-12-13 12:28:03.880164 : NTiles_TileMatrix_8_chr8, Class = numeric
+
+NTiles_TileMatrix_8_chr8: length = 1
+  chr8 
+290278 
+
+
+
+2025-12-13 12:28:03.881001 : NCells_TileMatrix_8_chr8, Class = integer
+
+NCells_TileMatrix_8_chr8: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:03.881759 : MinTile_TileMatrix_8_chr8, Class = numeric
+
+MinTile_TileMatrix_8_chr8: length = 1
+[1] 297
+
+
+
+2025-12-13 12:28:03.882739 : MaxTile_TileMatrix_8_chr8, Class = numeric
+
+MaxTile_TileMatrix_8_chr8: length = 1
+[1] 290150
+
+
+
+2025-12-13 12:28:03.885275 : MinCell_TileMatrix_8_chr8, Class = integer
+
+MinCell_TileMatrix_8_chr8: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:03.886072 : MaxCell_TileMatrix_8_chr8, Class = integer
+
+MaxCell_TileMatrix_8_chr8: length = 1
+[1] 851
+
+
+2025-12-13 12:28:05.294118 : Adding TileMatrix to ATAC_555_2 for Chr (1 of 23)!, 0.204 mins elapsed.
+
+2025-12-13 12:28:05.421082 : NTiles_TileMatrix_1_chr1, Class = numeric
+
+NTiles_TileMatrix_1_chr1: length = 1
+  chr1 
+497913 
+
+
+
+2025-12-13 12:28:05.421953 : NCells_TileMatrix_1_chr1, Class = integer
+
+NCells_TileMatrix_1_chr1: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:05.422725 : MinTile_TileMatrix_1_chr1, Class = numeric
+
+MinTile_TileMatrix_1_chr1: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:05.424406 : MaxTile_TileMatrix_1_chr1, Class = numeric
+
+MaxTile_TileMatrix_1_chr1: length = 1
+[1] 497893
+
+
+
+2025-12-13 12:28:05.431844 : MinCell_TileMatrix_1_chr1, Class = integer
+
+MinCell_TileMatrix_1_chr1: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:05.432895 : MaxCell_TileMatrix_1_chr1, Class = integer
+
+MaxCell_TileMatrix_1_chr1: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:05.812999 : Adding TileMatrix to ATAC_557 for Chr (9 of 23)!, 0.602 mins elapsed.
+
+2025-12-13 12:28:05.88166 : NTiles_TileMatrix_9_chr9, Class = numeric
+
+NTiles_TileMatrix_9_chr9: length = 1
+  chr9 
+276790 
+
+
+
+2025-12-13 12:28:05.883122 : NCells_TileMatrix_9_chr9, Class = integer
+
+NCells_TileMatrix_9_chr9: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:05.884502 : MinTile_TileMatrix_9_chr9, Class = numeric
+
+MinTile_TileMatrix_9_chr9: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:05.886274 : MaxTile_TileMatrix_9_chr9, Class = numeric
+
+MaxTile_TileMatrix_9_chr9: length = 1
+[1] 276452
+
+
+
+2025-12-13 12:28:05.891069 : MinCell_TileMatrix_9_chr9, Class = integer
+
+MinCell_TileMatrix_9_chr9: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:05.892535 : MaxCell_TileMatrix_9_chr9, Class = integer
+
+MaxCell_TileMatrix_9_chr9: length = 1
+[1] 851
+
+
+2025-12-13 12:28:07.975025 : Adding TileMatrix to ATAC_557 for Chr (10 of 23)!, 0.638 mins elapsed.
+
+2025-12-13 12:28:08.037249 : NTiles_TileMatrix_10_chr10, Class = numeric
+
+NTiles_TileMatrix_10_chr10: length = 1
+ chr10 
+267595 
+
+
+
+2025-12-13 12:28:08.03819 : NCells_TileMatrix_10_chr10, Class = integer
+
+NCells_TileMatrix_10_chr10: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:08.039011 : MinTile_TileMatrix_10_chr10, Class = numeric
+
+MinTile_TileMatrix_10_chr10: length = 1
+[1] 92
+
+
+
+2025-12-13 12:28:08.040125 : MaxTile_TileMatrix_10_chr10, Class = numeric
+
+MaxTile_TileMatrix_10_chr10: length = 1
+[1] 267575
+
+
+
+2025-12-13 12:28:08.043052 : MinCell_TileMatrix_10_chr10, Class = integer
+
+MinCell_TileMatrix_10_chr10: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:08.044041 : MaxCell_TileMatrix_10_chr10, Class = integer
+
+MaxCell_TileMatrix_10_chr10: length = 1
+[1] 851
+
+
+2025-12-13 12:28:08.151608 : Adding TileMatrix to ATAC_555_2 for Chr (2 of 23)!, 0.251 mins elapsed.
+
+2025-12-13 12:28:08.25529 : NTiles_TileMatrix_2_chr2, Class = numeric
+
+NTiles_TileMatrix_2_chr2: length = 1
+  chr2 
+484388 
+
+
+
+2025-12-13 12:28:08.256171 : NCells_TileMatrix_2_chr2, Class = integer
+
+NCells_TileMatrix_2_chr2: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:08.256935 : MinTile_TileMatrix_2_chr2, Class = numeric
+
+MinTile_TileMatrix_2_chr2: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:08.258911 : MaxTile_TileMatrix_2_chr2, Class = numeric
+
+MaxTile_TileMatrix_2_chr2: length = 1
+[1] 484367
+
+
+
+2025-12-13 12:28:08.266344 : MinCell_TileMatrix_2_chr2, Class = integer
+
+MinCell_TileMatrix_2_chr2: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:08.267213 : MaxCell_TileMatrix_2_chr2, Class = integer
+
+MaxCell_TileMatrix_2_chr2: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:09.488243 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (1 of 23)!, 0.194 mins elapsed.
+2025-12-13 12:28:10.209835 : Adding TileMatrix to ATAC_557 for Chr (11 of 23)!, 0.675 mins elapsed.
+
+2025-12-13 12:28:10.271772 : NTiles_TileMatrix_11_chr11, Class = numeric
+
+NTiles_TileMatrix_11_chr11: length = 1
+ chr11 
+270174 
+
+
+
+2025-12-13 12:28:10.272693 : NCells_TileMatrix_11_chr11, Class = integer
+
+NCells_TileMatrix_11_chr11: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:10.273505 : MinTile_TileMatrix_11_chr11, Class = numeric
+
+MinTile_TileMatrix_11_chr11: length = 1
+[1] 252
+
+
+
+2025-12-13 12:28:10.27459 : MaxTile_TileMatrix_11_chr11, Class = numeric
+
+MaxTile_TileMatrix_11_chr11: length = 1
+[1] 270154
+
+
+
+2025-12-13 12:28:10.277618 : MinCell_TileMatrix_11_chr11, Class = integer
+
+MinCell_TileMatrix_11_chr11: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:10.278453 : MaxCell_TileMatrix_11_chr11, Class = integer
+
+MaxCell_TileMatrix_11_chr11: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:10.544287 : NTiles_TileMatrix_1_chr1, Class = numeric
+
+NTiles_TileMatrix_1_chr1: length = 1
+  chr1 
+497913 
+
+
+
+2025-12-13 12:28:10.545231 : NCells_TileMatrix_1_chr1, Class = integer
+
+NCells_TileMatrix_1_chr1: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:28:10.546013 : MinTile_TileMatrix_1_chr1, Class = numeric
+
+MinTile_TileMatrix_1_chr1: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:10.549197 : MaxTile_TileMatrix_1_chr1, Class = numeric
+
+MaxTile_TileMatrix_1_chr1: length = 1
+[1] 497893
+
+
+
+2025-12-13 12:28:10.568123 : MinCell_TileMatrix_1_chr1, Class = integer
+
+MinCell_TileMatrix_1_chr1: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:10.569197 : MaxCell_TileMatrix_1_chr1, Class = integer
+
+MaxCell_TileMatrix_1_chr1: length = 1
+[1] 6412
+
+
+2025-12-13 12:28:10.995318 : Adding TileMatrix to ATAC_555_2 for Chr (3 of 23)!, 0.299 mins elapsed.
+
+2025-12-13 12:28:11.089186 : NTiles_TileMatrix_3_chr3, Class = numeric
+
+NTiles_TileMatrix_3_chr3: length = 1
+  chr3 
+396592 
+
+
+
+2025-12-13 12:28:11.090104 : NCells_TileMatrix_3_chr3, Class = integer
+
+NCells_TileMatrix_3_chr3: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:11.090904 : MinTile_TileMatrix_3_chr3, Class = numeric
+
+MinTile_TileMatrix_3_chr3: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:11.092332 : MaxTile_TileMatrix_3_chr3, Class = numeric
+
+MaxTile_TileMatrix_3_chr3: length = 1
+[1] 396382
+
+
+
+2025-12-13 12:28:11.098542 : MinCell_TileMatrix_3_chr3, Class = integer
+
+MinCell_TileMatrix_3_chr3: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:11.09941 : MaxCell_TileMatrix_3_chr3, Class = integer
+
+MaxCell_TileMatrix_3_chr3: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:12.755127 : Adding TileMatrix to ATAC_557 for Chr (12 of 23)!, 0.717 mins elapsed.
+
+2025-12-13 12:28:12.811579 : NTiles_TileMatrix_12_chr12, Class = numeric
+
+NTiles_TileMatrix_12_chr12: length = 1
+ chr12 
+266551 
+
+
+
+2025-12-13 12:28:12.812486 : NCells_TileMatrix_12_chr12, Class = integer
+
+NCells_TileMatrix_12_chr12: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:12.813296 : MinTile_TileMatrix_12_chr12, Class = numeric
+
+MinTile_TileMatrix_12_chr12: length = 1
+[1] 27
+
+
+
+2025-12-13 12:28:12.814387 : MaxTile_TileMatrix_12_chr12, Class = numeric
+
+MaxTile_TileMatrix_12_chr12: length = 1
+[1] 266529
+
+
+
+2025-12-13 12:28:12.817249 : MinCell_TileMatrix_12_chr12, Class = integer
+
+MinCell_TileMatrix_12_chr12: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:12.818193 : MaxCell_TileMatrix_12_chr12, Class = integer
+
+MaxCell_TileMatrix_12_chr12: length = 1
+[1] 851
+
+
+2025-12-13 12:28:13.811078 : Adding TileMatrix to ATAC_555_2 for Chr (4 of 23)!, 0.346 mins elapsed.
+
+2025-12-13 12:28:13.879934 : NTiles_TileMatrix_4_chr4, Class = numeric
+
+NTiles_TileMatrix_4_chr4: length = 1
+  chr4 
+380430 
+
+
+
+2025-12-13 12:28:13.880852 : NCells_TileMatrix_4_chr4, Class = integer
+
+NCells_TileMatrix_4_chr4: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:13.881627 : MinTile_TileMatrix_4_chr4, Class = numeric
+
+MinTile_TileMatrix_4_chr4: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:13.883161 : MaxTile_TileMatrix_4_chr4, Class = numeric
+
+MaxTile_TileMatrix_4_chr4: length = 1
+[1] 380365
+
+
+
+2025-12-13 12:28:13.888031 : MinCell_TileMatrix_4_chr4, Class = integer
+
+MinCell_TileMatrix_4_chr4: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:13.888886 : MaxCell_TileMatrix_4_chr4, Class = integer
+
+MaxCell_TileMatrix_4_chr4: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:15.073271 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (2 of 23)!, 0.287 mins elapsed.
+2025-12-13 12:28:15.20756 : Adding TileMatrix to ATAC_557 for Chr (13 of 23)!, 0.758 mins elapsed.
+
+2025-12-13 12:28:15.252377 : NTiles_TileMatrix_13_chr13, Class = numeric
+
+NTiles_TileMatrix_13_chr13: length = 1
+ chr13 
+228729 
+
+
+
+2025-12-13 12:28:15.253307 : NCells_TileMatrix_13_chr13, Class = integer
+
+NCells_TileMatrix_13_chr13: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:15.25409 : MinTile_TileMatrix_13_chr13, Class = numeric
+
+MinTile_TileMatrix_13_chr13: length = 1
+[1] 32001
+
+
+
+2025-12-13 12:28:15.255027 : MaxTile_TileMatrix_13_chr13, Class = numeric
+
+MaxTile_TileMatrix_13_chr13: length = 1
+[1] 228708
+
+
+
+2025-12-13 12:28:15.257041 : MinCell_TileMatrix_13_chr13, Class = integer
+
+MinCell_TileMatrix_13_chr13: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:15.257874 : MaxCell_TileMatrix_13_chr13, Class = integer
+
+MaxCell_TileMatrix_13_chr13: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:15.372726 : NTiles_TileMatrix_2_chr2, Class = numeric
+
+NTiles_TileMatrix_2_chr2: length = 1
+  chr2 
+484388 
+
+
+
+2025-12-13 12:28:15.373697 : NCells_TileMatrix_2_chr2, Class = integer
+
+NCells_TileMatrix_2_chr2: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:28:15.374526 : MinTile_TileMatrix_2_chr2, Class = numeric
+
+MinTile_TileMatrix_2_chr2: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:15.377835 : MaxTile_TileMatrix_2_chr2, Class = numeric
+
+MaxTile_TileMatrix_2_chr2: length = 1
+[1] 484367
+
+
+
+2025-12-13 12:28:15.395837 : MinCell_TileMatrix_2_chr2, Class = integer
+
+MinCell_TileMatrix_2_chr2: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:15.396723 : MaxCell_TileMatrix_2_chr2, Class = integer
+
+MaxCell_TileMatrix_2_chr2: length = 1
+[1] 6412
+
+
+2025-12-13 12:28:16.513186 : Adding TileMatrix to ATAC_555_2 for Chr (5 of 23)!, 0.391 mins elapsed.
+
+2025-12-13 12:28:16.603352 : NTiles_TileMatrix_5_chr5, Class = numeric
+
+NTiles_TileMatrix_5_chr5: length = 1
+  chr5 
+363077 
+
+
+
+2025-12-13 12:28:16.604414 : NCells_TileMatrix_5_chr5, Class = integer
+
+NCells_TileMatrix_5_chr5: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:16.605228 : MinTile_TileMatrix_5_chr5, Class = numeric
+
+MinTile_TileMatrix_5_chr5: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:16.60692 : MaxTile_TileMatrix_5_chr5, Class = numeric
+
+MaxTile_TileMatrix_5_chr5: length = 1
+[1] 362728
+
+
+
+2025-12-13 12:28:16.612998 : MinCell_TileMatrix_5_chr5, Class = integer
+
+MinCell_TileMatrix_5_chr5: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:16.613901 : MaxCell_TileMatrix_5_chr5, Class = integer
+
+MaxCell_TileMatrix_5_chr5: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:17.670382 : Adding TileMatrix to ATAC_557 for Chr (14 of 23)!, 0.799 mins elapsed.
+
+2025-12-13 12:28:17.721313 : NTiles_TileMatrix_14_chr14, Class = numeric
+
+NTiles_TileMatrix_14_chr14: length = 1
+ chr14 
+214088 
+
+
+
+2025-12-13 12:28:17.722226 : NCells_TileMatrix_14_chr14, Class = integer
+
+NCells_TileMatrix_14_chr14: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:17.72302 : MinTile_TileMatrix_14_chr14, Class = numeric
+
+MinTile_TileMatrix_14_chr14: length = 1
+[1] 32082
+
+
+
+2025-12-13 12:28:17.723998 : MaxTile_TileMatrix_14_chr14, Class = numeric
+
+MaxTile_TileMatrix_14_chr14: length = 1
+[1] 213768
+
+
+
+2025-12-13 12:28:17.726464 : MinCell_TileMatrix_14_chr14, Class = integer
+
+MinCell_TileMatrix_14_chr14: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:17.72729 : MaxCell_TileMatrix_14_chr14, Class = integer
+
+MaxCell_TileMatrix_14_chr14: length = 1
+[1] 851
+
+
+2025-12-13 12:28:19.165957 : Adding TileMatrix to ATAC_555_2 for Chr (6 of 23)!, 0.435 mins elapsed.
+
+2025-12-13 12:28:19.258292 : NTiles_TileMatrix_6_chr6, Class = numeric
+
+NTiles_TileMatrix_6_chr6: length = 1
+  chr6 
+341612 
+
+
+
+2025-12-13 12:28:19.259609 : NCells_TileMatrix_6_chr6, Class = integer
+
+NCells_TileMatrix_6_chr6: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:19.260798 : MinTile_TileMatrix_6_chr6, Class = numeric
+
+MinTile_TileMatrix_6_chr6: length = 1
+[1] 193
+
+
+
+2025-12-13 12:28:19.262981 : MaxTile_TileMatrix_6_chr6, Class = numeric
+
+MaxTile_TileMatrix_6_chr6: length = 1
+[1] 341475
+
+
+
+2025-12-13 12:28:19.271926 : MinCell_TileMatrix_6_chr6, Class = integer
+
+MinCell_TileMatrix_6_chr6: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:19.273253 : MaxCell_TileMatrix_6_chr6, Class = integer
+
+MaxCell_TileMatrix_6_chr6: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:19.989899 : Adding TileMatrix to ATAC_557 for Chr (15 of 23)!, 0.838 mins elapsed.
+
+2025-12-13 12:28:20.047199 : NTiles_TileMatrix_15_chr15, Class = numeric
+
+NTiles_TileMatrix_15_chr15: length = 1
+ chr15 
+203983 
+
+
+
+2025-12-13 12:28:20.048284 : NCells_TileMatrix_15_chr15, Class = integer
+
+NCells_TileMatrix_15_chr15: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:20.049132 : MinTile_TileMatrix_15_chr15, Class = numeric
+
+MinTile_TileMatrix_15_chr15: length = 1
+[1] 34025
+
+
+
+2025-12-13 12:28:20.050183 : MaxTile_TileMatrix_15_chr15, Class = numeric
+
+MaxTile_TileMatrix_15_chr15: length = 1
+[1] 203963
+
+
+
+2025-12-13 12:28:20.052256 : MinCell_TileMatrix_15_chr15, Class = integer
+
+MinCell_TileMatrix_15_chr15: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:20.0531 : MaxCell_TileMatrix_15_chr15, Class = integer
+
+MaxCell_TileMatrix_15_chr15: length = 1
+[1] 851
+
+
+2025-12-13 12:28:20.356047 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (3 of 23)!, 0.375 mins elapsed.
+
+2025-12-13 12:28:20.56141 : NTiles_TileMatrix_3_chr3, Class = numeric
+
+NTiles_TileMatrix_3_chr3: length = 1
+  chr3 
+396592 
+
+
+
+2025-12-13 12:28:20.562541 : NCells_TileMatrix_3_chr3, Class = integer
+
+NCells_TileMatrix_3_chr3: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:28:20.563395 : MinTile_TileMatrix_3_chr3, Class = numeric
+
+MinTile_TileMatrix_3_chr3: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:20.566315 : MaxTile_TileMatrix_3_chr3, Class = numeric
+
+MaxTile_TileMatrix_3_chr3: length = 1
+[1] 396359
+
+
+
+2025-12-13 12:28:20.581413 : MinCell_TileMatrix_3_chr3, Class = integer
+
+MinCell_TileMatrix_3_chr3: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:20.582292 : MaxCell_TileMatrix_3_chr3, Class = integer
+
+MaxCell_TileMatrix_3_chr3: length = 1
+[1] 6412
+
+
+2025-12-13 12:28:22.028754 : Adding TileMatrix to ATAC_555_2 for Chr (7 of 23)!, 0.483 mins elapsed.
+
+2025-12-13 12:28:22.10025 : NTiles_TileMatrix_7_chr7, Class = numeric
+
+NTiles_TileMatrix_7_chr7: length = 1
+  chr7 
+318692 
+
+
+
+2025-12-13 12:28:22.101128 : NCells_TileMatrix_7_chr7, Class = integer
+
+NCells_TileMatrix_7_chr7: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:22.101883 : MinTile_TileMatrix_7_chr7, Class = numeric
+
+MinTile_TileMatrix_7_chr7: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:22.103122 : MaxTile_TileMatrix_7_chr7, Class = numeric
+
+MaxTile_TileMatrix_7_chr7: length = 1
+[1] 318672
+
+
+
+2025-12-13 12:28:22.10785 : MinCell_TileMatrix_7_chr7, Class = integer
+
+MinCell_TileMatrix_7_chr7: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:22.108653 : MaxCell_TileMatrix_7_chr7, Class = integer
+
+MaxCell_TileMatrix_7_chr7: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:22.413033 : Adding TileMatrix to ATAC_557 for Chr (16 of 23)!, 0.878 mins elapsed.
+
+2025-12-13 12:28:22.464288 : NTiles_TileMatrix_16_chr16, Class = numeric
+
+NTiles_TileMatrix_16_chr16: length = 1
+ chr16 
+180677 
+
+
+
+2025-12-13 12:28:22.465643 : NCells_TileMatrix_16_chr16, Class = integer
+
+NCells_TileMatrix_16_chr16: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:22.466917 : MinTile_TileMatrix_16_chr16, Class = numeric
+
+MinTile_TileMatrix_16_chr16: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:22.468003 : MaxTile_TileMatrix_16_chr16, Class = numeric
+
+MaxTile_TileMatrix_16_chr16: length = 1
+[1] 180432
+
+
+
+2025-12-13 12:28:22.470186 : MinCell_TileMatrix_16_chr16, Class = integer
+
+MinCell_TileMatrix_16_chr16: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:22.47108 : MaxCell_TileMatrix_16_chr16, Class = integer
+
+MaxCell_TileMatrix_16_chr16: length = 1
+[1] 851
+
+
+2025-12-13 12:28:24.258286 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (4 of 23)!, 0.44 mins elapsed.
+
+2025-12-13 12:28:24.441057 : NTiles_TileMatrix_4_chr4, Class = numeric
+
+NTiles_TileMatrix_4_chr4: length = 1
+  chr4 
+380430 
+
+
+
+2025-12-13 12:28:24.442543 : NCells_TileMatrix_4_chr4, Class = integer
+
+NCells_TileMatrix_4_chr4: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:28:24.443883 : MinTile_TileMatrix_4_chr4, Class = numeric
+
+MinTile_TileMatrix_4_chr4: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:24.448122 : MaxTile_TileMatrix_4_chr4, Class = numeric
+
+MaxTile_TileMatrix_4_chr4: length = 1
+[1] 380408
+
+
+
+2025-12-13 12:28:24.47185 : MinCell_TileMatrix_4_chr4, Class = integer
+
+MinCell_TileMatrix_4_chr4: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:24.473448 : MaxCell_TileMatrix_4_chr4, Class = integer
+
+MaxCell_TileMatrix_4_chr4: length = 1
+[1] 6412
+
+
+2025-12-13 12:28:24.628366 : Adding TileMatrix to ATAC_555_2 for Chr (8 of 23)!, 0.526 mins elapsed.
+
+2025-12-13 12:28:24.697752 : NTiles_TileMatrix_8_chr8, Class = numeric
+
+NTiles_TileMatrix_8_chr8: length = 1
+  chr8 
+290278 
+
+
+
+2025-12-13 12:28:24.698728 : NCells_TileMatrix_8_chr8, Class = integer
+
+NCells_TileMatrix_8_chr8: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:24.699543 : MinTile_TileMatrix_8_chr8, Class = numeric
+
+MinTile_TileMatrix_8_chr8: length = 1
+[1] 143
+
+
+
+2025-12-13 12:28:24.700811 : MaxTile_TileMatrix_8_chr8, Class = numeric
+
+MaxTile_TileMatrix_8_chr8: length = 1
+[1] 290158
+
+
+
+2025-12-13 12:28:24.705284 : MinCell_TileMatrix_8_chr8, Class = integer
+
+MinCell_TileMatrix_8_chr8: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:24.70611 : MaxCell_TileMatrix_8_chr8, Class = integer
+
+MaxCell_TileMatrix_8_chr8: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:24.81472 : Adding TileMatrix to ATAC_557 for Chr (17 of 23)!, 0.918 mins elapsed.
+
+2025-12-13 12:28:24.870263 : NTiles_TileMatrix_17_chr17, Class = numeric
+
+NTiles_TileMatrix_17_chr17: length = 1
+ chr17 
+166515 
+
+
+
+2025-12-13 12:28:24.871267 : NCells_TileMatrix_17_chr17, Class = integer
+
+NCells_TileMatrix_17_chr17: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:24.872604 : MinTile_TileMatrix_17_chr17, Class = numeric
+
+MinTile_TileMatrix_17_chr17: length = 1
+[1] 227
+
+
+
+2025-12-13 12:28:24.874055 : MaxTile_TileMatrix_17_chr17, Class = numeric
+
+MaxTile_TileMatrix_17_chr17: length = 1
+[1] 166495
+
+
+
+2025-12-13 12:28:24.876657 : MinCell_TileMatrix_17_chr17, Class = integer
+
+MinCell_TileMatrix_17_chr17: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:24.877585 : MaxCell_TileMatrix_17_chr17, Class = integer
+
+MaxCell_TileMatrix_17_chr17: length = 1
+[1] 851
+
+
+2025-12-13 12:28:27.166729 : Adding TileMatrix to ATAC_555_2 for Chr (9 of 23)!, 0.568 mins elapsed.
+2025-12-13 12:28:27.19114 : Adding TileMatrix to ATAC_557 for Chr (18 of 23)!, 0.958 mins elapsed.
+
+2025-12-13 12:28:27.230128 : NTiles_TileMatrix_9_chr9, Class = numeric
+
+NTiles_TileMatrix_9_chr9: length = 1
+  chr9 
+276790 
+
+
+
+2025-12-13 12:28:27.230988 : NCells_TileMatrix_9_chr9, Class = integer
+
+NCells_TileMatrix_9_chr9: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:27.231721 : MinTile_TileMatrix_9_chr9, Class = numeric
+
+MinTile_TileMatrix_9_chr9: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:27.233618 : NTiles_TileMatrix_18_chr18, Class = numeric
+
+NTiles_TileMatrix_18_chr18: length = 1
+ chr18 
+160747 
+
+
+
+2025-12-13 12:28:27.234443 : NCells_TileMatrix_18_chr18, Class = integer
+
+NCells_TileMatrix_18_chr18: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:27.235213 : MinTile_TileMatrix_18_chr18, Class = numeric
+
+MinTile_TileMatrix_18_chr18: length = 1
+[1] 21
+
+2025-12-13 12:28:27.232817 : MaxTile_TileMatrix_9_chr9, Class = numeric
+
+
+
+MaxTile_TileMatrix_9_chr9: length = 1
+[1] 276620
+
+
+
+2025-12-13 12:28:27.2365 : MinCell_TileMatrix_9_chr9, Class = integer
+
+MinCell_TileMatrix_9_chr9: length = 1
+[1] 1
+
+2025-12-13 12:28:27.23606 : MaxTile_TileMatrix_18_chr18, Class = numeric
+
+
+
+MaxTile_TileMatrix_18_chr18: length = 1
+[1] 160525
+
+2025-12-13 12:28:27.237288 : MaxCell_TileMatrix_9_chr9, Class = integer
+
+
+
+MaxCell_TileMatrix_9_chr9: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:27.237669 : MinCell_TileMatrix_18_chr18, Class = integer
+
+
+MinCell_TileMatrix_18_chr18: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:27.238425 : MaxCell_TileMatrix_18_chr18, Class = integer
+
+MaxCell_TileMatrix_18_chr18: length = 1
+[1] 851
+
+
+2025-12-13 12:28:27.931515 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (5 of 23)!, 0.501 mins elapsed.
+
+2025-12-13 12:28:27.981517 : NTiles_TileMatrix_5_chr5, Class = numeric
+
+NTiles_TileMatrix_5_chr5: length = 1
+  chr5 
+363077 
+
+
+
+2025-12-13 12:28:27.982513 : NCells_TileMatrix_5_chr5, Class = integer
+
+NCells_TileMatrix_5_chr5: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:28:27.983291 : MinTile_TileMatrix_5_chr5, Class = numeric
+
+MinTile_TileMatrix_5_chr5: length = 1
+[1] 24
+
+
+
+2025-12-13 12:28:27.984353 : MaxTile_TileMatrix_5_chr5, Class = numeric
+
+MaxTile_TileMatrix_5_chr5: length = 1
+[1] 48359
+
+
+
+2025-12-13 12:28:27.986602 : MinCell_TileMatrix_5_chr5, Class = integer
+
+MinCell_TileMatrix_5_chr5: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:27.987426 : MaxCell_TileMatrix_5_chr5, Class = integer
+
+MaxCell_TileMatrix_5_chr5: length = 1
+[1] 6412
+
+
+2025-12-13 12:28:29.534921 : Adding TileMatrix to ATAC_557 for Chr (19 of 23)!, 0.997 mins elapsed.
+
+2025-12-13 12:28:29.620553 : NTiles_TileMatrix_19_chr19, Class = numeric
+
+NTiles_TileMatrix_19_chr19: length = 1
+ chr19 
+117236 
+
+
+
+2025-12-13 12:28:29.621518 : NCells_TileMatrix_19_chr19, Class = integer
+
+NCells_TileMatrix_19_chr19: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:29.622516 : MinTile_TileMatrix_19_chr19, Class = numeric
+
+MinTile_TileMatrix_19_chr19: length = 1
+[1] 182
+
+
+
+2025-12-13 12:28:29.623703 : MaxTile_TileMatrix_19_chr19, Class = numeric
+
+MaxTile_TileMatrix_19_chr19: length = 1
+[1] 117197
+
+
+
+2025-12-13 12:28:29.626158 : MinCell_TileMatrix_19_chr19, Class = integer
+
+MinCell_TileMatrix_19_chr19: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:29.626976 : MaxCell_TileMatrix_19_chr19, Class = integer
+
+MaxCell_TileMatrix_19_chr19: length = 1
+[1] 851
+
+
+2025-12-13 12:28:29.760112 : Adding TileMatrix to ATAC_555_2 for Chr (10 of 23)!, 0.611 mins elapsed.
+
+2025-12-13 12:28:29.832727 : NTiles_TileMatrix_10_chr10, Class = numeric
+
+NTiles_TileMatrix_10_chr10: length = 1
+ chr10 
+267595 
+
+
+
+2025-12-13 12:28:29.833574 : NCells_TileMatrix_10_chr10, Class = integer
+
+NCells_TileMatrix_10_chr10: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:29.834286 : MinTile_TileMatrix_10_chr10, Class = numeric
+
+MinTile_TileMatrix_10_chr10: length = 1
+[1] 23
+
+
+
+2025-12-13 12:28:29.835441 : MaxTile_TileMatrix_10_chr10, Class = numeric
+
+MaxTile_TileMatrix_10_chr10: length = 1
+[1] 267575
+
+
+
+2025-12-13 12:28:29.839483 : MinCell_TileMatrix_10_chr10, Class = integer
+
+MinCell_TileMatrix_10_chr10: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:29.840238 : MaxCell_TileMatrix_10_chr10, Class = integer
+
+MaxCell_TileMatrix_10_chr10: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:30.343329 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (6 of 23)!, 0.541 mins elapsed.
+
+2025-12-13 12:28:30.361455 : NTiles_TileMatrix_6_chr6, Class = numeric
+
+NTiles_TileMatrix_6_chr6: length = 1
+  chr6 
+341612 
+
+
+
+2025-12-13 12:28:30.362353 : NCells_TileMatrix_6_chr6, Class = integer
+
+NCells_TileMatrix_6_chr6: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:28:30.3631 : MinTile_TileMatrix_6_chr6, Class = numeric
+
+MinTile_TileMatrix_6_chr6: length = 1
+[1] Inf
+
+
+
+2025-12-13 12:28:30.36394 : MaxTile_TileMatrix_6_chr6, Class = numeric
+
+MaxTile_TileMatrix_6_chr6: length = 1
+[1] -Inf
+
+
+
+2025-12-13 12:28:30.364808 : MinCell_TileMatrix_6_chr6, Class = numeric
+
+MinCell_TileMatrix_6_chr6: length = 1
+[1] Inf
+
+
+
+2025-12-13 12:28:30.365627 : MaxCell_TileMatrix_6_chr6, Class = numeric
+
+MaxCell_TileMatrix_6_chr6: length = 1
+[1] -Inf
+
+
+2025-12-13 12:28:31.973693 : Adding TileMatrix to ATAC_557 for Chr (20 of 23)!, 1.038 mins elapsed.
+
+2025-12-13 12:28:32.018185 : NTiles_TileMatrix_20_chr20, Class = numeric
+
+NTiles_TileMatrix_20_chr20: length = 1
+ chr20 
+128889 
+
+
+
+2025-12-13 12:28:32.019073 : NCells_TileMatrix_20_chr20, Class = integer
+
+NCells_TileMatrix_20_chr20: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:32.019838 : MinTile_TileMatrix_20_chr20, Class = numeric
+
+MinTile_TileMatrix_20_chr20: length = 1
+[1] 121
+
+
+
+2025-12-13 12:28:32.020685 : MaxTile_TileMatrix_20_chr20, Class = numeric
+
+MaxTile_TileMatrix_20_chr20: length = 1
+[1] 128668
+
+
+
+2025-12-13 12:28:32.022362 : MinCell_TileMatrix_20_chr20, Class = integer
+
+MinCell_TileMatrix_20_chr20: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:32.023114 : MaxCell_TileMatrix_20_chr20, Class = integer
+
+MaxCell_TileMatrix_20_chr20: length = 1
+[1] 851
+
+
+2025-12-13 12:28:32.396088 : Adding TileMatrix to ATAC_555_2 for Chr (11 of 23)!, 0.655 mins elapsed.
+
+2025-12-13 12:28:32.469898 : NTiles_TileMatrix_11_chr11, Class = numeric
+
+NTiles_TileMatrix_11_chr11: length = 1
+ chr11 
+270174 
+
+
+
+2025-12-13 12:28:32.470814 : NCells_TileMatrix_11_chr11, Class = integer
+
+NCells_TileMatrix_11_chr11: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:32.471609 : MinTile_TileMatrix_11_chr11, Class = numeric
+
+MinTile_TileMatrix_11_chr11: length = 1
+[1] 242
+
+
+
+2025-12-13 12:28:32.473141 : MaxTile_TileMatrix_11_chr11, Class = numeric
+
+MaxTile_TileMatrix_11_chr11: length = 1
+[1] 270153
+
+
+
+2025-12-13 12:28:32.477892 : MinCell_TileMatrix_11_chr11, Class = integer
+
+MinCell_TileMatrix_11_chr11: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:32.478779 : MaxCell_TileMatrix_11_chr11, Class = integer
+
+MaxCell_TileMatrix_11_chr11: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:32.632639 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (7 of 23)!, 0.579 mins elapsed.
+
+2025-12-13 12:28:32.657374 : NTiles_TileMatrix_7_chr7, Class = numeric
+
+NTiles_TileMatrix_7_chr7: length = 1
+  chr7 
+318692 
+
+
+
+2025-12-13 12:28:32.658246 : NCells_TileMatrix_7_chr7, Class = integer
+
+NCells_TileMatrix_7_chr7: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:28:32.659327 : MinTile_TileMatrix_7_chr7, Class = numeric
+
+MinTile_TileMatrix_7_chr7: length = 1
+[1] Inf
+
+
+
+2025-12-13 12:28:32.660335 : MaxTile_TileMatrix_7_chr7, Class = numeric
+
+MaxTile_TileMatrix_7_chr7: length = 1
+[1] -Inf
+
+
+
+2025-12-13 12:28:32.661246 : MinCell_TileMatrix_7_chr7, Class = numeric
+
+MinCell_TileMatrix_7_chr7: length = 1
+[1] Inf
+
+
+
+2025-12-13 12:28:32.662088 : MaxCell_TileMatrix_7_chr7, Class = numeric
+
+MaxCell_TileMatrix_7_chr7: length = 1
+[1] -Inf
+
+
+2025-12-13 12:28:34.410015 : Adding TileMatrix to ATAC_557 for Chr (21 of 23)!, 1.078 mins elapsed.
+
+2025-12-13 12:28:34.45481 : NTiles_TileMatrix_21_chr21, Class = numeric
+
+NTiles_TileMatrix_21_chr21: length = 1
+chr21 
+93420 
+
+
+
+2025-12-13 12:28:34.455688 : NCells_TileMatrix_21_chr21, Class = integer
+
+NCells_TileMatrix_21_chr21: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:34.456455 : MinTile_TileMatrix_21_chr21, Class = numeric
+
+MinTile_TileMatrix_21_chr21: length = 1
+[1] 10156
+
+
+
+2025-12-13 12:28:34.457449 : MaxTile_TileMatrix_21_chr21, Class = numeric
+
+MaxTile_TileMatrix_21_chr21: length = 1
+[1] 93362
+
+
+
+2025-12-13 12:28:34.458688 : MinCell_TileMatrix_21_chr21, Class = integer
+
+MinCell_TileMatrix_21_chr21: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:34.45946 : MaxCell_TileMatrix_21_chr21, Class = integer
+
+MaxCell_TileMatrix_21_chr21: length = 1
+[1] 851
+
+
+2025-12-13 12:28:34.928484 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (8 of 23)!, 0.618 mins elapsed.
+
+2025-12-13 12:28:34.954858 : NTiles_TileMatrix_8_chr8, Class = numeric
+
+NTiles_TileMatrix_8_chr8: length = 1
+  chr8 
+290278 
+
+
+
+2025-12-13 12:28:34.955802 : NCells_TileMatrix_8_chr8, Class = integer
+
+NCells_TileMatrix_8_chr8: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:28:34.956747 : MinTile_TileMatrix_8_chr8, Class = numeric
+
+MinTile_TileMatrix_8_chr8: length = 1
+[1] Inf
+
+
+
+2025-12-13 12:28:34.957752 : MaxTile_TileMatrix_8_chr8, Class = numeric
+
+MaxTile_TileMatrix_8_chr8: length = 1
+[1] -Inf
+
+
+
+2025-12-13 12:28:34.958675 : MinCell_TileMatrix_8_chr8, Class = numeric
+
+MinCell_TileMatrix_8_chr8: length = 1
+[1] Inf
+
+
+
+2025-12-13 12:28:34.959567 : MaxCell_TileMatrix_8_chr8, Class = numeric
+
+MaxCell_TileMatrix_8_chr8: length = 1
+[1] -Inf
+
+
+2025-12-13 12:28:35.065288 : Adding TileMatrix to ATAC_555_2 for Chr (12 of 23)!, 0.7 mins elapsed.
+
+2025-12-13 12:28:35.13755 : NTiles_TileMatrix_12_chr12, Class = numeric
+
+NTiles_TileMatrix_12_chr12: length = 1
+ chr12 
+266551 
+
+
+
+2025-12-13 12:28:35.138498 : NCells_TileMatrix_12_chr12, Class = integer
+
+NCells_TileMatrix_12_chr12: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:35.13925 : MinTile_TileMatrix_12_chr12, Class = numeric
+
+MinTile_TileMatrix_12_chr12: length = 1
+[1] 22
+
+
+
+2025-12-13 12:28:35.140504 : MaxTile_TileMatrix_12_chr12, Class = numeric
+
+MaxTile_TileMatrix_12_chr12: length = 1
+[1] 266525
+
+
+
+2025-12-13 12:28:35.145089 : MinCell_TileMatrix_12_chr12, Class = integer
+
+MinCell_TileMatrix_12_chr12: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:35.145883 : MaxCell_TileMatrix_12_chr12, Class = integer
+
+MaxCell_TileMatrix_12_chr12: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:36.758142 : Adding TileMatrix to ATAC_557 for Chr (22 of 23)!, 1.117 mins elapsed.
+
+2025-12-13 12:28:36.802234 : NTiles_TileMatrix_22_chr22, Class = numeric
+
+NTiles_TileMatrix_22_chr22: length = 1
+ chr22 
+101637 
+
+
+
+2025-12-13 12:28:36.80317 : NCells_TileMatrix_22_chr22, Class = integer
+
+NCells_TileMatrix_22_chr22: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:36.80401 : MinTile_TileMatrix_22_chr22, Class = numeric
+
+MinTile_TileMatrix_22_chr22: length = 1
+[1] 21064
+
+
+
+2025-12-13 12:28:36.805222 : MaxTile_TileMatrix_22_chr22, Class = numeric
+
+MaxTile_TileMatrix_22_chr22: length = 1
+[1] 101614
+
+
+
+2025-12-13 12:28:36.806796 : MinCell_TileMatrix_22_chr22, Class = integer
+
+MinCell_TileMatrix_22_chr22: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:36.807591 : MaxCell_TileMatrix_22_chr22, Class = integer
+
+MaxCell_TileMatrix_22_chr22: length = 1
+[1] 851
+
+
+2025-12-13 12:28:37.25704 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (9 of 23)!, 0.657 mins elapsed.
+
+2025-12-13 12:28:37.277432 : NTiles_TileMatrix_9_chr9, Class = numeric
+
+NTiles_TileMatrix_9_chr9: length = 1
+  chr9 
+276790 
+
+
+
+2025-12-13 12:28:37.278301 : NCells_TileMatrix_9_chr9, Class = integer
+
+NCells_TileMatrix_9_chr9: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:28:37.279016 : MinTile_TileMatrix_9_chr9, Class = numeric
+
+MinTile_TileMatrix_9_chr9: length = 1
+[1] Inf
+
+
+
+2025-12-13 12:28:37.279873 : MaxTile_TileMatrix_9_chr9, Class = numeric
+
+MaxTile_TileMatrix_9_chr9: length = 1
+[1] -Inf
+
+
+
+2025-12-13 12:28:37.2807 : MinCell_TileMatrix_9_chr9, Class = numeric
+
+MinCell_TileMatrix_9_chr9: length = 1
+[1] Inf
+
+
+
+2025-12-13 12:28:37.281488 : MaxCell_TileMatrix_9_chr9, Class = numeric
+
+MaxCell_TileMatrix_9_chr9: length = 1
+[1] -Inf
+
+
+2025-12-13 12:28:37.753596 : Adding TileMatrix to ATAC_555_2 for Chr (13 of 23)!, 0.745 mins elapsed.
+
+2025-12-13 12:28:37.807203 : NTiles_TileMatrix_13_chr13, Class = numeric
+
+NTiles_TileMatrix_13_chr13: length = 1
+ chr13 
+228729 
+
+
+
+2025-12-13 12:28:37.808093 : NCells_TileMatrix_13_chr13, Class = integer
+
+NCells_TileMatrix_13_chr13: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:37.808842 : MinTile_TileMatrix_13_chr13, Class = numeric
+
+MinTile_TileMatrix_13_chr13: length = 1
+[1] 32007
+
+
+
+2025-12-13 12:28:37.809848 : MaxTile_TileMatrix_13_chr13, Class = numeric
+
+MaxTile_TileMatrix_13_chr13: length = 1
+[1] 228708
+
+
+
+2025-12-13 12:28:37.81275 : MinCell_TileMatrix_13_chr13, Class = integer
+
+MinCell_TileMatrix_13_chr13: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:37.813569 : MaxCell_TileMatrix_13_chr13, Class = integer
+
+MaxCell_TileMatrix_13_chr13: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:39.147452 : Adding TileMatrix to ATAC_557 for Chr (23 of 23)!, 1.157 mins elapsed.
+
+2025-12-13 12:28:39.196373 : NTiles_TileMatrix_23_chrX, Class = numeric
+
+NTiles_TileMatrix_23_chrX: length = 1
+  chrX 
+312082 
+
+
+
+2025-12-13 12:28:39.197241 : NCells_TileMatrix_23_chrX, Class = integer
+
+NCells_TileMatrix_23_chrX: length = 1
+[1] 851
+
+
+
+2025-12-13 12:28:39.197979 : MinTile_TileMatrix_23_chrX, Class = numeric
+
+MinTile_TileMatrix_23_chrX: length = 1
+[1] 30
+
+
+
+2025-12-13 12:28:39.198836 : MaxTile_TileMatrix_23_chrX, Class = numeric
+
+MaxTile_TileMatrix_23_chrX: length = 1
+[1] 312062
+
+
+
+2025-12-13 12:28:39.200876 : MinCell_TileMatrix_23_chrX, Class = integer
+
+MinCell_TileMatrix_23_chrX: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:39.201698 : MaxCell_TileMatrix_23_chrX, Class = integer
+
+MaxCell_TileMatrix_23_chrX: length = 1
+[1] 851
+
+
+2025-12-13 12:28:39.605568 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (10 of 23)!, 0.696 mins elapsed.
+
+2025-12-13 12:28:39.751813 : NTiles_TileMatrix_10_chr10, Class = numeric
+
+NTiles_TileMatrix_10_chr10: length = 1
+ chr10 
+267595 
+
+
+
+2025-12-13 12:28:39.752718 : NCells_TileMatrix_10_chr10, Class = integer
+
+NCells_TileMatrix_10_chr10: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:28:39.753419 : MinTile_TileMatrix_10_chr10, Class = numeric
+
+MinTile_TileMatrix_10_chr10: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:39.755467 : MaxTile_TileMatrix_10_chr10, Class = numeric
+
+MaxTile_TileMatrix_10_chr10: length = 1
+[1] 267575
+
+
+
+2025-12-13 12:28:39.765847 : MinCell_TileMatrix_10_chr10, Class = integer
+
+MinCell_TileMatrix_10_chr10: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:39.76668 : MaxCell_TileMatrix_10_chr10, Class = integer
+
+MaxCell_TileMatrix_10_chr10: length = 1
+[1] 6412
+
+
+2025-12-13 12:28:40.263745 : Adding TileMatrix to ATAC_555_2 for Chr (14 of 23)!, 0.787 mins elapsed.
+
+2025-12-13 12:28:40.321733 : NTiles_TileMatrix_14_chr14, Class = numeric
+
+NTiles_TileMatrix_14_chr14: length = 1
+ chr14 
+214088 
+
+
+
+2025-12-13 12:28:40.322585 : NCells_TileMatrix_14_chr14, Class = integer
+
+NCells_TileMatrix_14_chr14: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:40.323322 : MinTile_TileMatrix_14_chr14, Class = numeric
+
+MinTile_TileMatrix_14_chr14: length = 1
+[1] 32049
+
+
+
+2025-12-13 12:28:40.324397 : MaxTile_TileMatrix_14_chr14, Class = numeric
+
+MaxTile_TileMatrix_14_chr14: length = 1
+[1] 213768
+
+
+
+2025-12-13 12:28:40.327841 : MinCell_TileMatrix_14_chr14, Class = integer
+
+MinCell_TileMatrix_14_chr14: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:40.328613 : MaxCell_TileMatrix_14_chr14, Class = integer
+
+MaxCell_TileMatrix_14_chr14: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:42.340843 : (ATAC_557 : 3 of 3) Finished Adding TileMatrix!, 6.822 mins elapsed.
+2025-12-13 12:28:42.341906 : (ATAC_557 : 3 of 3) Adding GeneScoreMatrix!, 6.822 mins elapsed.
+
+
+2025-12-13 12:28:42.541481 : ATAC_557 .addGeneScoreMat geneRegions, Class = GRanges
+GRanges object with 24919 ranges and 5 metadata columns:
+          seqnames              ranges strand |     gene_id       symbol geneStart   geneEnd geneWeight
+             <Rle>           <IRanges>  <Rle> | <character>  <character> <integer> <integer>  <numeric>
+      [1]     chr1         64091-70008      + |       79501        OR4F5     69091     70008    4.40770
+      [2]     chr1       139790-145339      - |      729737    LOC729737    140339    139790    4.63365
+      [3]     chr1       585990-634010      - |   101928626 LOC101928626    629010    585990    1.41996
+      [4]     chr1       812371-819837      + |      400728       FAM87B    817371    819837    3.70079
+      [5]     chr1       820138-859446      + |      643837    LINC01128    825138    859446    1.51303
+      ...      ...                 ...    ... .         ...          ...       ...       ...        ...
+  [24915]     chrX 155258241-155269589      - |      116442       RAB39B 155264589 155258241    2.77696
+  [24916]     chrX 155276211-155339657      - |        1193        CLIC2 155334657 155276211    1.31785
+  [24917]     chrX 155375787-155381134      + |      474382       H2AFB1 155380787 155381134    4.77090
+  [24918]     chrX 155377115-155383230      + |      474383         F8A2 155382115 155383230    4.29738
+  [24919]     chrX 155490115-155674944      - |       55217        TMLHE 155669944 155490115    1.10911
+  -------
+  seqinfo: 23 sequences from hg38 genome
+
+2025-12-13 12:28:42.751548 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (1 of 23)!, 0.001 mins elapsed.
+2025-12-13 12:28:42.797133 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (2 of 23)!, 0.002 mins elapsed.
+2025-12-13 12:28:42.857227 : Adding TileMatrix to ATAC_555_2 for Chr (15 of 23)!, 0.83 mins elapsed.
+
+2025-12-13 12:28:42.918615 : NTiles_TileMatrix_15_chr15, Class = numeric
+
+NTiles_TileMatrix_15_chr15: length = 1
+ chr15 
+203983 
+
+
+
+2025-12-13 12:28:42.919515 : NCells_TileMatrix_15_chr15, Class = integer
+
+NCells_TileMatrix_15_chr15: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:42.920285 : MinTile_TileMatrix_15_chr15, Class = numeric
+
+MinTile_TileMatrix_15_chr15: length = 1
+[1] 34020
+
+
+
+2025-12-13 12:28:42.921396 : MaxTile_TileMatrix_15_chr15, Class = numeric
+
+MaxTile_TileMatrix_15_chr15: length = 1
+[1] 203963
+
+
+
+2025-12-13 12:28:42.924673 : MinCell_TileMatrix_15_chr15, Class = integer
+
+MinCell_TileMatrix_15_chr15: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:42.925484 : MaxCell_TileMatrix_15_chr15, Class = integer
+
+MaxCell_TileMatrix_15_chr15: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:43.114635 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (11 of 23)!, 0.754 mins elapsed.
+
+2025-12-13 12:28:43.29168 : NTiles_TileMatrix_11_chr11, Class = numeric
+
+NTiles_TileMatrix_11_chr11: length = 1
+ chr11 
+270174 
+
+
+
+2025-12-13 12:28:43.292588 : NCells_TileMatrix_11_chr11, Class = integer
+
+NCells_TileMatrix_11_chr11: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:28:43.293364 : MinTile_TileMatrix_11_chr11, Class = numeric
+
+MinTile_TileMatrix_11_chr11: length = 1
+[1] 264
+
+
+
+2025-12-13 12:28:43.295701 : MaxTile_TileMatrix_11_chr11, Class = numeric
+
+MaxTile_TileMatrix_11_chr11: length = 1
+[1] 270154
+
+
+
+2025-12-13 12:28:43.306778 : MinCell_TileMatrix_11_chr11, Class = integer
+
+MinCell_TileMatrix_11_chr11: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:43.30767 : MaxCell_TileMatrix_11_chr11, Class = integer
+
+MaxCell_TileMatrix_11_chr11: length = 1
+[1] 6412
+
+
+2025-12-13 12:28:45.899801 : Adding TileMatrix to ATAC_555_2 for Chr (16 of 23)!, 0.88 mins elapsed.
+
+2025-12-13 12:28:45.968847 : NTiles_TileMatrix_16_chr16, Class = numeric
+
+NTiles_TileMatrix_16_chr16: length = 1
+ chr16 
+180677 
+
+
+
+2025-12-13 12:28:45.969846 : NCells_TileMatrix_16_chr16, Class = integer
+
+NCells_TileMatrix_16_chr16: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:45.970752 : MinTile_TileMatrix_16_chr16, Class = numeric
+
+MinTile_TileMatrix_16_chr16: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:45.971981 : MaxTile_TileMatrix_16_chr16, Class = numeric
+
+MaxTile_TileMatrix_16_chr16: length = 1
+[1] 180450
+
+
+
+2025-12-13 12:28:45.975594 : MinCell_TileMatrix_16_chr16, Class = integer
+
+MinCell_TileMatrix_16_chr16: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:45.976477 : MaxCell_TileMatrix_16_chr16, Class = integer
+
+MaxCell_TileMatrix_16_chr16: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:46.603711 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (3 of 23)!, 0.065 mins elapsed.
+2025-12-13 12:28:46.656147 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (4 of 23)!, 0.066 mins elapsed.
+2025-12-13 12:28:47.177408 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (12 of 23)!, 0.822 mins elapsed.
+
+2025-12-13 12:28:47.343937 : NTiles_TileMatrix_12_chr12, Class = numeric
+
+NTiles_TileMatrix_12_chr12: length = 1
+ chr12 
+266551 
+
+
+
+2025-12-13 12:28:47.34483 : NCells_TileMatrix_12_chr12, Class = integer
+
+NCells_TileMatrix_12_chr12: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:28:47.345606 : MinTile_TileMatrix_12_chr12, Class = numeric
+
+MinTile_TileMatrix_12_chr12: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:47.34771 : MaxTile_TileMatrix_12_chr12, Class = numeric
+
+MaxTile_TileMatrix_12_chr12: length = 1
+[1] 266529
+
+
+
+2025-12-13 12:28:47.358212 : MinCell_TileMatrix_12_chr12, Class = integer
+
+MinCell_TileMatrix_12_chr12: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:47.359026 : MaxCell_TileMatrix_12_chr12, Class = integer
+
+MaxCell_TileMatrix_12_chr12: length = 1
+[1] 6412
+
+
+2025-12-13 12:28:49.089647 : Adding TileMatrix to ATAC_555_2 for Chr (17 of 23)!, 0.934 mins elapsed.
+
+2025-12-13 12:28:49.171035 : NTiles_TileMatrix_17_chr17, Class = numeric
+
+NTiles_TileMatrix_17_chr17: length = 1
+ chr17 
+166515 
+
+
+
+2025-12-13 12:28:49.172052 : NCells_TileMatrix_17_chr17, Class = integer
+
+NCells_TileMatrix_17_chr17: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:49.172898 : MinTile_TileMatrix_17_chr17, Class = numeric
+
+MinTile_TileMatrix_17_chr17: length = 1
+[1] 146
+
+
+
+2025-12-13 12:28:49.174129 : MaxTile_TileMatrix_17_chr17, Class = numeric
+
+MaxTile_TileMatrix_17_chr17: length = 1
+[1] 166495
+
+
+
+2025-12-13 12:28:49.178397 : MinCell_TileMatrix_17_chr17, Class = integer
+
+MinCell_TileMatrix_17_chr17: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:49.179324 : MaxCell_TileMatrix_17_chr17, Class = integer
+
+MaxCell_TileMatrix_17_chr17: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:50.195024 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (5 of 23)!, 0.125 mins elapsed.
+2025-12-13 12:28:50.251489 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (6 of 23)!, 0.126 mins elapsed.
+2025-12-13 12:28:51.4984 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (13 of 23)!, 0.894 mins elapsed.
+
+2025-12-13 12:28:51.617638 : NTiles_TileMatrix_13_chr13, Class = numeric
+
+NTiles_TileMatrix_13_chr13: length = 1
+ chr13 
+228729 
+
+
+
+2025-12-13 12:28:51.618608 : NCells_TileMatrix_13_chr13, Class = integer
+
+NCells_TileMatrix_13_chr13: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:28:51.619401 : MinTile_TileMatrix_13_chr13, Class = numeric
+
+MinTile_TileMatrix_13_chr13: length = 1
+[1] 32001
+
+
+
+2025-12-13 12:28:51.621408 : MaxTile_TileMatrix_13_chr13, Class = numeric
+
+MaxTile_TileMatrix_13_chr13: length = 1
+[1] 228708
+
+
+
+2025-12-13 12:28:51.628906 : MinCell_TileMatrix_13_chr13, Class = integer
+
+MinCell_TileMatrix_13_chr13: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:51.629897 : MaxCell_TileMatrix_13_chr13, Class = integer
+
+MaxCell_TileMatrix_13_chr13: length = 1
+[1] 6412
+
+
+2025-12-13 12:28:52.268941 : Adding TileMatrix to ATAC_555_2 for Chr (18 of 23)!, 0.987 mins elapsed.
+
+2025-12-13 12:28:52.326142 : NTiles_TileMatrix_18_chr18, Class = numeric
+
+NTiles_TileMatrix_18_chr18: length = 1
+ chr18 
+160747 
+
+
+
+2025-12-13 12:28:52.327035 : NCells_TileMatrix_18_chr18, Class = integer
+
+NCells_TileMatrix_18_chr18: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:52.327772 : MinTile_TileMatrix_18_chr18, Class = numeric
+
+MinTile_TileMatrix_18_chr18: length = 1
+[1] 21
+
+
+
+2025-12-13 12:28:52.328737 : MaxTile_TileMatrix_18_chr18, Class = numeric
+
+MaxTile_TileMatrix_18_chr18: length = 1
+[1] 160527
+
+
+
+2025-12-13 12:28:52.331279 : MinCell_TileMatrix_18_chr18, Class = integer
+
+MinCell_TileMatrix_18_chr18: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:52.332083 : MaxCell_TileMatrix_18_chr18, Class = integer
+
+MaxCell_TileMatrix_18_chr18: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:53.821391 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (7 of 23)!, 0.185 mins elapsed.
+2025-12-13 12:28:53.888536 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (8 of 23)!, 0.186 mins elapsed.
+2025-12-13 12:28:55.057981 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (14 of 23)!, 0.953 mins elapsed.
+
+2025-12-13 12:28:55.203978 : NTiles_TileMatrix_14_chr14, Class = numeric
+
+NTiles_TileMatrix_14_chr14: length = 1
+ chr14 
+214088 
+
+
+
+2025-12-13 12:28:55.205063 : NCells_TileMatrix_14_chr14, Class = integer
+
+NCells_TileMatrix_14_chr14: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:28:55.20605 : MinTile_TileMatrix_14_chr14, Class = numeric
+
+MinTile_TileMatrix_14_chr14: length = 1
+[1] 32071
+
+
+
+2025-12-13 12:28:55.208148 : MaxTile_TileMatrix_14_chr14, Class = numeric
+
+MaxTile_TileMatrix_14_chr14: length = 1
+[1] 213768
+
+
+
+2025-12-13 12:28:55.218029 : MinCell_TileMatrix_14_chr14, Class = integer
+
+MinCell_TileMatrix_14_chr14: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:55.219049 : MaxCell_TileMatrix_14_chr14, Class = integer
+
+MaxCell_TileMatrix_14_chr14: length = 1
+[1] 6412
+
+
+2025-12-13 12:28:55.337658 : Adding TileMatrix to ATAC_555_2 for Chr (19 of 23)!, 1.038 mins elapsed.
+
+2025-12-13 12:28:55.414085 : NTiles_TileMatrix_19_chr19, Class = numeric
+
+NTiles_TileMatrix_19_chr19: length = 1
+ chr19 
+117236 
+
+
+
+2025-12-13 12:28:55.414992 : NCells_TileMatrix_19_chr19, Class = integer
+
+NCells_TileMatrix_19_chr19: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:55.415787 : MinTile_TileMatrix_19_chr19, Class = numeric
+
+MinTile_TileMatrix_19_chr19: length = 1
+[1] 187
+
+
+
+2025-12-13 12:28:55.416945 : MaxTile_TileMatrix_19_chr19, Class = numeric
+
+MaxTile_TileMatrix_19_chr19: length = 1
+[1] 117215
+
+
+
+2025-12-13 12:28:55.420719 : MinCell_TileMatrix_19_chr19, Class = integer
+
+MinCell_TileMatrix_19_chr19: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:55.421657 : MaxCell_TileMatrix_19_chr19, Class = integer
+
+MaxCell_TileMatrix_19_chr19: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:57.249406 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (9 of 23)!, 0.242 mins elapsed.
+2025-12-13 12:28:57.295341 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (10 of 23)!, 0.243 mins elapsed.
+2025-12-13 12:28:58.406169 : Adding TileMatrix to ATAC_555_2 for Chr (20 of 23)!, 1.089 mins elapsed.
+
+2025-12-13 12:28:58.490349 : NTiles_TileMatrix_20_chr20, Class = numeric
+
+NTiles_TileMatrix_20_chr20: length = 1
+ chr20 
+128889 
+
+
+
+2025-12-13 12:28:58.491951 : NCells_TileMatrix_20_chr20, Class = integer
+
+NCells_TileMatrix_20_chr20: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:28:58.493423 : MinTile_TileMatrix_20_chr20, Class = numeric
+
+MinTile_TileMatrix_20_chr20: length = 1
+[1] 121
+
+
+
+2025-12-13 12:28:58.495489 : MaxTile_TileMatrix_20_chr20, Class = numeric
+
+MaxTile_TileMatrix_20_chr20: length = 1
+[1] 128668
+
+
+
+2025-12-13 12:28:58.500421 : MinCell_TileMatrix_20_chr20, Class = integer
+
+MinCell_TileMatrix_20_chr20: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:58.501555 : MaxCell_TileMatrix_20_chr20, Class = integer
+
+MaxCell_TileMatrix_20_chr20: length = 1
+[1] 1227
+
+
+2025-12-13 12:28:58.80789 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (15 of 23)!, 1.016 mins elapsed.
+
+2025-12-13 12:28:58.928747 : NTiles_TileMatrix_15_chr15, Class = numeric
+
+NTiles_TileMatrix_15_chr15: length = 1
+ chr15 
+203983 
+
+
+
+2025-12-13 12:28:58.929704 : NCells_TileMatrix_15_chr15, Class = integer
+
+NCells_TileMatrix_15_chr15: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:28:58.930485 : MinTile_TileMatrix_15_chr15, Class = numeric
+
+MinTile_TileMatrix_15_chr15: length = 1
+[1] 34020
+
+
+
+2025-12-13 12:28:58.932107 : MaxTile_TileMatrix_15_chr15, Class = numeric
+
+MaxTile_TileMatrix_15_chr15: length = 1
+[1] 203963
+
+
+
+2025-12-13 12:28:58.939351 : MinCell_TileMatrix_15_chr15, Class = integer
+
+MinCell_TileMatrix_15_chr15: length = 1
+[1] 1
+
+
+
+2025-12-13 12:28:58.940212 : MaxCell_TileMatrix_15_chr15, Class = integer
+
+MaxCell_TileMatrix_15_chr15: length = 1
+[1] 6412
+
+
+2025-12-13 12:29:00.704312 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (11 of 23)!, 0.3 mins elapsed.
+2025-12-13 12:29:00.747033 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (12 of 23)!, 0.301 mins elapsed.
+2025-12-13 12:29:01.398309 : Adding TileMatrix to ATAC_555_2 for Chr (21 of 23)!, 1.139 mins elapsed.
+
+2025-12-13 12:29:01.448671 : NTiles_TileMatrix_21_chr21, Class = numeric
+
+NTiles_TileMatrix_21_chr21: length = 1
+chr21 
+93420 
+
+
+
+2025-12-13 12:29:01.449653 : NCells_TileMatrix_21_chr21, Class = integer
+
+NCells_TileMatrix_21_chr21: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:29:01.450522 : MinTile_TileMatrix_21_chr21, Class = numeric
+
+MinTile_TileMatrix_21_chr21: length = 1
+[1] 10071
+
+
+
+2025-12-13 12:29:01.451558 : MaxTile_TileMatrix_21_chr21, Class = numeric
+
+MaxTile_TileMatrix_21_chr21: length = 1
+[1] 93400
+
+
+
+2025-12-13 12:29:01.453501 : MinCell_TileMatrix_21_chr21, Class = integer
+
+MinCell_TileMatrix_21_chr21: length = 1
+[1] 1
+
+
+
+2025-12-13 12:29:01.454384 : MaxCell_TileMatrix_21_chr21, Class = integer
+
+MaxCell_TileMatrix_21_chr21: length = 1
+[1] 1227
+
+
+2025-12-13 12:29:02.361945 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (16 of 23)!, 1.075 mins elapsed.
+
+2025-12-13 12:29:02.487803 : NTiles_TileMatrix_16_chr16, Class = numeric
+
+NTiles_TileMatrix_16_chr16: length = 1
+ chr16 
+180677 
+
+
+
+2025-12-13 12:29:02.488707 : NCells_TileMatrix_16_chr16, Class = integer
+
+NCells_TileMatrix_16_chr16: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:29:02.489483 : MinTile_TileMatrix_16_chr16, Class = numeric
+
+MinTile_TileMatrix_16_chr16: length = 1
+[1] 21
+
+
+
+2025-12-13 12:29:02.491307 : MaxTile_TileMatrix_16_chr16, Class = numeric
+
+MaxTile_TileMatrix_16_chr16: length = 1
+[1] 180453
+
+
+
+2025-12-13 12:29:02.499124 : MinCell_TileMatrix_16_chr16, Class = integer
+
+MinCell_TileMatrix_16_chr16: length = 1
+[1] 1
+
+
+
+2025-12-13 12:29:02.499983 : MaxCell_TileMatrix_16_chr16, Class = integer
+
+MaxCell_TileMatrix_16_chr16: length = 1
+[1] 6412
+
+
+2025-12-13 12:29:04.162812 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (13 of 23)!, 0.358 mins elapsed.
+2025-12-13 12:29:04.222365 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (14 of 23)!, 0.359 mins elapsed.
+2025-12-13 12:29:04.282034 : Adding TileMatrix to ATAC_555_2 for Chr (22 of 23)!, 1.187 mins elapsed.
+
+2025-12-13 12:29:04.338934 : NTiles_TileMatrix_22_chr22, Class = numeric
+
+NTiles_TileMatrix_22_chr22: length = 1
+ chr22 
+101637 
+
+
+
+2025-12-13 12:29:04.339856 : NCells_TileMatrix_22_chr22, Class = integer
+
+NCells_TileMatrix_22_chr22: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:29:04.340613 : MinTile_TileMatrix_22_chr22, Class = numeric
+
+MinTile_TileMatrix_22_chr22: length = 1
+[1] 21049
+
+
+
+2025-12-13 12:29:04.341536 : MaxTile_TileMatrix_22_chr22, Class = numeric
+
+MaxTile_TileMatrix_22_chr22: length = 1
+[1] 101616
+
+
+
+2025-12-13 12:29:04.343662 : MinCell_TileMatrix_22_chr22, Class = integer
+
+MinCell_TileMatrix_22_chr22: length = 1
+[1] 1
+
+
+
+2025-12-13 12:29:04.344641 : MaxCell_TileMatrix_22_chr22, Class = integer
+
+MaxCell_TileMatrix_22_chr22: length = 1
+[1] 1227
+
+
+2025-12-13 12:29:05.898005 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (17 of 23)!, 1.134 mins elapsed.
+
+2025-12-13 12:29:06.0702 : NTiles_TileMatrix_17_chr17, Class = numeric
+
+NTiles_TileMatrix_17_chr17: length = 1
+ chr17 
+166515 
+
+
+
+2025-12-13 12:29:06.071191 : NCells_TileMatrix_17_chr17, Class = integer
+
+NCells_TileMatrix_17_chr17: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:29:06.071982 : MinTile_TileMatrix_17_chr17, Class = numeric
+
+MinTile_TileMatrix_17_chr17: length = 1
+[1] 156
+
+
+
+2025-12-13 12:29:06.074364 : MaxTile_TileMatrix_17_chr17, Class = numeric
+
+MaxTile_TileMatrix_17_chr17: length = 1
+[1] 166495
+
+
+
+2025-12-13 12:29:06.084221 : MinCell_TileMatrix_17_chr17, Class = integer
+
+MinCell_TileMatrix_17_chr17: length = 1
+[1] 1
+
+
+
+2025-12-13 12:29:06.085175 : MaxCell_TileMatrix_17_chr17, Class = integer
+
+MaxCell_TileMatrix_17_chr17: length = 1
+[1] 6412
+
+
+2025-12-13 12:29:07.237793 : Adding TileMatrix to ATAC_555_2 for Chr (23 of 23)!, 1.236 mins elapsed.
+
+2025-12-13 12:29:07.339898 : NTiles_TileMatrix_23_chrX, Class = numeric
+
+NTiles_TileMatrix_23_chrX: length = 1
+  chrX 
+312082 
+
+
+
+2025-12-13 12:29:07.340999 : NCells_TileMatrix_23_chrX, Class = integer
+
+NCells_TileMatrix_23_chrX: length = 1
+[1] 1227
+
+
+
+2025-12-13 12:29:07.341877 : MinTile_TileMatrix_23_chrX, Class = numeric
+
+MinTile_TileMatrix_23_chrX: length = 1
+[1] 22
+
+
+
+2025-12-13 12:29:07.343167 : MaxTile_TileMatrix_23_chrX, Class = numeric
+
+MaxTile_TileMatrix_23_chrX: length = 1
+[1] 312062
+
+
+
+2025-12-13 12:29:07.34645 : MinCell_TileMatrix_23_chrX, Class = integer
+
+MinCell_TileMatrix_23_chrX: length = 1
+[1] 1
+
+
+
+2025-12-13 12:29:07.347353 : MaxCell_TileMatrix_23_chrX, Class = integer
+
+MaxCell_TileMatrix_23_chrX: length = 1
+[1] 1227
+
+
+2025-12-13 12:29:07.585322 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (15 of 23)!, 0.415 mins elapsed.
+2025-12-13 12:29:07.673188 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (16 of 23)!, 0.416 mins elapsed.
+2025-12-13 12:29:09.803478 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (18 of 23)!, 1.199 mins elapsed.
+
+2025-12-13 12:29:09.925552 : NTiles_TileMatrix_18_chr18, Class = numeric
+
+NTiles_TileMatrix_18_chr18: length = 1
+ chr18 
+160747 
+
+
+
+2025-12-13 12:29:09.926589 : NCells_TileMatrix_18_chr18, Class = integer
+
+NCells_TileMatrix_18_chr18: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:29:09.92752 : MinTile_TileMatrix_18_chr18, Class = numeric
+
+MinTile_TileMatrix_18_chr18: length = 1
+[1] 21
+
+
+
+2025-12-13 12:29:09.929265 : MaxTile_TileMatrix_18_chr18, Class = numeric
+
+MaxTile_TileMatrix_18_chr18: length = 1
+[1] 160527
+
+
+
+2025-12-13 12:29:09.935728 : MinCell_TileMatrix_18_chr18, Class = integer
+
+MinCell_TileMatrix_18_chr18: length = 1
+[1] 1
+
+
+
+2025-12-13 12:29:09.936683 : MaxCell_TileMatrix_18_chr18, Class = integer
+
+MaxCell_TileMatrix_18_chr18: length = 1
+[1] 6412
+
+
+2025-12-13 12:29:10.912077 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (17 of 23)!, 0.47 mins elapsed.
+2025-12-13 12:29:11.079283 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (18 of 23)!, 0.473 mins elapsed.
+2025-12-13 12:29:11.213197 : (ATAC_555_2 : 2 of 3) Finished Adding TileMatrix!, 7.303 mins elapsed.
+2025-12-13 12:29:11.214288 : (ATAC_555_2 : 2 of 3) Adding GeneScoreMatrix!, 7.303 mins elapsed.
+
+
+2025-12-13 12:29:11.399863 : ATAC_555_2 .addGeneScoreMat geneRegions, Class = GRanges
+GRanges object with 24919 ranges and 5 metadata columns:
+          seqnames              ranges strand |     gene_id       symbol geneStart   geneEnd geneWeight
+             <Rle>           <IRanges>  <Rle> | <character>  <character> <integer> <integer>  <numeric>
+      [1]     chr1         64091-70008      + |       79501        OR4F5     69091     70008    4.40770
+      [2]     chr1       139790-145339      - |      729737    LOC729737    140339    139790    4.63365
+      [3]     chr1       585990-634010      - |   101928626 LOC101928626    629010    585990    1.41996
+      [4]     chr1       812371-819837      + |      400728       FAM87B    817371    819837    3.70079
+      [5]     chr1       820138-859446      + |      643837    LINC01128    825138    859446    1.51303
+      ...      ...                 ...    ... .         ...          ...       ...       ...        ...
+  [24915]     chrX 155258241-155269589      - |      116442       RAB39B 155264589 155258241    2.77696
+  [24916]     chrX 155276211-155339657      - |        1193        CLIC2 155334657 155276211    1.31785
+  [24917]     chrX 155375787-155381134      + |      474382       H2AFB1 155380787 155381134    4.77090
+  [24918]     chrX 155377115-155383230      + |      474383         F8A2 155382115 155383230    4.29738
+  [24919]     chrX 155490115-155674944      - |       55217        TMLHE 155669944 155490115    1.10911
+  -------
+  seqinfo: 23 sequences from hg38 genome
+
+2025-12-13 12:29:11.628919 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (1 of 23)!, 0.001 mins elapsed.
+2025-12-13 12:29:11.672468 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (2 of 23)!, 0.002 mins elapsed.
+2025-12-13 12:29:13.432059 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (19 of 23)!, 1.259 mins elapsed.
+
+2025-12-13 12:29:13.723439 : NTiles_TileMatrix_19_chr19, Class = numeric
+
+NTiles_TileMatrix_19_chr19: length = 1
+ chr19 
+117236 
+
+
+
+2025-12-13 12:29:13.725127 : NCells_TileMatrix_19_chr19, Class = integer
+
+NCells_TileMatrix_19_chr19: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:29:13.726348 : MinTile_TileMatrix_19_chr19, Class = numeric
+
+MinTile_TileMatrix_19_chr19: length = 1
+[1] 179
+
+
+
+2025-12-13 12:29:13.728815 : MaxTile_TileMatrix_19_chr19, Class = numeric
+
+MaxTile_TileMatrix_19_chr19: length = 1
+[1] 117216
+
+
+
+2025-12-13 12:29:13.739454 : MinCell_TileMatrix_19_chr19, Class = integer
+
+MinCell_TileMatrix_19_chr19: length = 1
+[1] 1
+
+
+
+2025-12-13 12:29:13.740977 : MaxCell_TileMatrix_19_chr19, Class = integer
+
+MaxCell_TileMatrix_19_chr19: length = 1
+[1] 6412
+
+
+2025-12-13 12:29:14.719155 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (19 of 23)!, 0.534 mins elapsed.
+2025-12-13 12:29:14.865322 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (20 of 23)!, 0.536 mins elapsed.
+2025-12-13 12:29:16.708153 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (3 of 23)!, 0.086 mins elapsed.
+2025-12-13 12:29:16.912693 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (4 of 23)!, 0.089 mins elapsed.
+2025-12-13 12:29:18.63138 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (21 of 23)!, 0.599 mins elapsed.
+2025-12-13 12:29:18.759026 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (22 of 23)!, 0.601 mins elapsed.
+2025-12-13 12:29:19.30222 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (20 of 23)!, 1.357 mins elapsed.
+
+2025-12-13 12:29:19.457479 : NTiles_TileMatrix_20_chr20, Class = numeric
+
+NTiles_TileMatrix_20_chr20: length = 1
+ chr20 
+128889 
+
+
+
+2025-12-13 12:29:19.458732 : NCells_TileMatrix_20_chr20, Class = integer
+
+NCells_TileMatrix_20_chr20: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:29:19.459828 : MinTile_TileMatrix_20_chr20, Class = numeric
+
+MinTile_TileMatrix_20_chr20: length = 1
+[1] 121
+
+
+
+2025-12-13 12:29:19.462821 : MaxTile_TileMatrix_20_chr20, Class = numeric
+
+MaxTile_TileMatrix_20_chr20: length = 1
+[1] 128668
+
+
+
+2025-12-13 12:29:19.469957 : MinCell_TileMatrix_20_chr20, Class = integer
+
+MinCell_TileMatrix_20_chr20: length = 1
+[1] 1
+
+
+
+2025-12-13 12:29:19.470906 : MaxCell_TileMatrix_20_chr20, Class = integer
+
+MaxCell_TileMatrix_20_chr20: length = 1
+[1] 6412
+
+
+2025-12-13 12:29:21.996339 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (5 of 23)!, 0.174 mins elapsed.
+2025-12-13 12:29:22.108879 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (6 of 23)!, 0.176 mins elapsed.
+2025-12-13 12:29:22.818513 : Creating Temp GeneScoreMatrix for ATAC_557, Chr (23 of 23)!, 0.669 mins elapsed.
+2025-12-13 12:29:23.497238 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (21 of 23)!, 1.427 mins elapsed.
+
+2025-12-13 12:29:23.583887 : NTiles_TileMatrix_21_chr21, Class = numeric
+
+NTiles_TileMatrix_21_chr21: length = 1
+chr21 
+93420 
+
+
+
+2025-12-13 12:29:23.58484 : NCells_TileMatrix_21_chr21, Class = integer
+
+NCells_TileMatrix_21_chr21: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:29:23.585727 : MinTile_TileMatrix_21_chr21, Class = numeric
+
+MinTile_TileMatrix_21_chr21: length = 1
+[1] 10064
+
+
+
+2025-12-13 12:29:23.587069 : MaxTile_TileMatrix_21_chr21, Class = numeric
+
+MaxTile_TileMatrix_21_chr21: length = 1
+[1] 93400
+
+
+
+2025-12-13 12:29:23.591114 : MinCell_TileMatrix_21_chr21, Class = integer
+
+MinCell_TileMatrix_21_chr21: length = 1
+[1] 1
+
+
+
+2025-12-13 12:29:23.592163 : MaxCell_TileMatrix_21_chr21, Class = integer
+
+MaxCell_TileMatrix_21_chr21: length = 1
+[1] 6412
+
+
+2025-12-13 12:29:26.111458 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (7 of 23)!, 0.242 mins elapsed.
+2025-12-13 12:29:26.211692 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (8 of 23)!, 0.244 mins elapsed.
+2025-12-13 12:29:26.616784 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (22 of 23)!, 1.479 mins elapsed.
+
+2025-12-13 12:29:26.70802 : NTiles_TileMatrix_22_chr22, Class = numeric
+
+NTiles_TileMatrix_22_chr22: length = 1
+ chr22 
+101637 
+
+
+
+2025-12-13 12:29:26.708936 : NCells_TileMatrix_22_chr22, Class = integer
+
+NCells_TileMatrix_22_chr22: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:29:26.709719 : MinTile_TileMatrix_22_chr22, Class = numeric
+
+MinTile_TileMatrix_22_chr22: length = 1
+[1] 21120
+
+
+
+2025-12-13 12:29:26.711122 : MaxTile_TileMatrix_22_chr22, Class = numeric
+
+MaxTile_TileMatrix_22_chr22: length = 1
+[1] 101617
+
+
+
+2025-12-13 12:29:26.715689 : MinCell_TileMatrix_22_chr22, Class = integer
+
+MinCell_TileMatrix_22_chr22: length = 1
+[1] 1
+
+
+
+2025-12-13 12:29:26.716557 : MaxCell_TileMatrix_22_chr22, Class = integer
+
+MaxCell_TileMatrix_22_chr22: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:29:27.662897 : ATAC_557 .addGeneScoreMat FeatureDF, Class = data.frame
+ATAC_557 .addGeneScoreMat FeatureDF: nRows = 24919, nCols = 6
+  seqnames  start    end strand         name idx
+1     chr1  69091  70008      1        OR4F5   1
+2     chr1 140339 139790      2    LOC729737   2
+3     chr1 629010 585990      2 LOC101928626   3
+4     chr1 817371 819837      1       FAM87B   4
+5     chr1 825138 859446      1    LINC01128   5
+6     chr1 827522 826206      2    LINC00115   6
+
+
+2025-12-13 12:29:29.046578 : Adding GeneScoreMatrix to ATAC_557 for Chr (1 of 23)!, 0.772 mins elapsed.
+2025-12-13 12:29:29.649776 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (9 of 23)!, 0.301 mins elapsed.
+2025-12-13 12:29:29.66509 : Adding TileMatrix to ATAC_HIP02_frozen for Chr (23 of 23)!, 1.53 mins elapsed.
+2025-12-13 12:29:29.692052 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (10 of 23)!, 0.302 mins elapsed.
+
+2025-12-13 12:29:29.697178 : NTiles_TileMatrix_23_chrX, Class = numeric
+
+NTiles_TileMatrix_23_chrX: length = 1
+  chrX 
+312082 
+
+
+
+2025-12-13 12:29:29.698172 : NCells_TileMatrix_23_chrX, Class = integer
+
+NCells_TileMatrix_23_chrX: length = 1
+[1] 6412
+
+
+
+2025-12-13 12:29:29.699027 : MinTile_TileMatrix_23_chrX, Class = numeric
+
+MinTile_TileMatrix_23_chrX: length = 1
+[1] Inf
+
+
+
+2025-12-13 12:29:29.699998 : MaxTile_TileMatrix_23_chrX, Class = numeric
+
+MaxTile_TileMatrix_23_chrX: length = 1
+[1] -Inf
+
+
+
+2025-12-13 12:29:29.700994 : MinCell_TileMatrix_23_chrX, Class = numeric
+
+MinCell_TileMatrix_23_chrX: length = 1
+[1] Inf
+
+
+
+2025-12-13 12:29:29.701957 : MaxCell_TileMatrix_23_chrX, Class = numeric
+
+MaxCell_TileMatrix_23_chrX: length = 1
+[1] -Inf
+
+
+2025-12-13 12:29:30.281346 : Adding GeneScoreMatrix to ATAC_557 for Chr (2 of 23)!, 0.793 mins elapsed.
+2025-12-13 12:29:31.434908 : Adding GeneScoreMatrix to ATAC_557 for Chr (3 of 23)!, 0.812 mins elapsed.
+2025-12-13 12:29:33.17062 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (11 of 23)!, 0.36 mins elapsed.
+2025-12-13 12:29:33.32053 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (12 of 23)!, 0.362 mins elapsed.
+2025-12-13 12:29:33.33961 : (ATAC_HIP02_frozen : 1 of 3) Finished Adding TileMatrix!, 7.672 mins elapsed.
+2025-12-13 12:29:33.341116 : (ATAC_HIP02_frozen : 1 of 3) Adding GeneScoreMatrix!, 7.672 mins elapsed.
+2025-12-13 12:29:33.514948 : Adding GeneScoreMatrix to ATAC_557 for Chr (4 of 23)!, 0.847 mins elapsed.
+
+
+2025-12-13 12:29:33.54549 : ATAC_HIP02_frozen .addGeneScoreMat geneRegions, Class = GRanges
+GRanges object with 24919 ranges and 5 metadata columns:
+          seqnames              ranges strand |     gene_id       symbol geneStart   geneEnd geneWeight
+             <Rle>           <IRanges>  <Rle> | <character>  <character> <integer> <integer>  <numeric>
+      [1]     chr1         64091-70008      + |       79501        OR4F5     69091     70008    4.40770
+      [2]     chr1       139790-145339      - |      729737    LOC729737    140339    139790    4.63365
+      [3]     chr1       585990-634010      - |   101928626 LOC101928626    629010    585990    1.41996
+      [4]     chr1       812371-819837      + |      400728       FAM87B    817371    819837    3.70079
+      [5]     chr1       820138-859446      + |      643837    LINC01128    825138    859446    1.51303
+      ...      ...                 ...    ... .         ...          ...       ...       ...        ...
+  [24915]     chrX 155258241-155269589      - |      116442       RAB39B 155264589 155258241    2.77696
+  [24916]     chrX 155276211-155339657      - |        1193        CLIC2 155334657 155276211    1.31785
+  [24917]     chrX 155375787-155381134      + |      474382       H2AFB1 155380787 155381134    4.77090
+  [24918]     chrX 155377115-155383230      + |      474383         F8A2 155382115 155383230    4.29738
+  [24919]     chrX 155490115-155674944      - |       55217        TMLHE 155669944 155490115    1.10911
+  -------
+  seqinfo: 23 sequences from hg38 genome
+
+2025-12-13 12:29:33.775071 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (1 of 23)!, 0.001 mins elapsed.
+2025-12-13 12:29:33.816453 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (2 of 23)!, 0.001 mins elapsed.
+2025-12-13 12:29:34.657126 : Adding GeneScoreMatrix to ATAC_557 for Chr (5 of 23)!, 0.866 mins elapsed.
+2025-12-13 12:29:35.932241 : Adding GeneScoreMatrix to ATAC_557 for Chr (6 of 23)!, 0.887 mins elapsed.
+2025-12-13 12:29:37.307964 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (13 of 23)!, 0.429 mins elapsed.
+2025-12-13 12:29:37.372623 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (14 of 23)!, 0.43 mins elapsed.
+2025-12-13 12:29:38.311962 : Adding GeneScoreMatrix to ATAC_557 for Chr (7 of 23)!, 0.927 mins elapsed.
+2025-12-13 12:29:39.575281 : Adding GeneScoreMatrix to ATAC_557 for Chr (8 of 23)!, 0.948 mins elapsed.
+2025-12-13 12:29:39.986709 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (3 of 23)!, 0.104 mins elapsed.
+2025-12-13 12:29:40.312619 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (4 of 23)!, 0.11 mins elapsed.
+2025-12-13 12:29:40.922184 : Adding GeneScoreMatrix to ATAC_557 for Chr (9 of 23)!, 0.97 mins elapsed.
+2025-12-13 12:29:41.704954 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (15 of 23)!, 0.502 mins elapsed.
+2025-12-13 12:29:41.765606 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (16 of 23)!, 0.503 mins elapsed.
+2025-12-13 12:29:43.121558 : Adding GeneScoreMatrix to ATAC_557 for Chr (10 of 23)!, 1.007 mins elapsed.
+2025-12-13 12:29:44.428633 : Adding GeneScoreMatrix to ATAC_557 for Chr (11 of 23)!, 1.029 mins elapsed.
+2025-12-13 12:29:45.644382 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (5 of 23)!, 0.199 mins elapsed.
+2025-12-13 12:29:45.692474 : Adding GeneScoreMatrix to ATAC_557 for Chr (12 of 23)!, 1.05 mins elapsed.
+2025-12-13 12:29:45.708533 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (17 of 23)!, 0.569 mins elapsed.
+2025-12-13 12:29:45.880411 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (18 of 23)!, 0.572 mins elapsed.
+2025-12-13 12:29:45.989626 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (6 of 23)!, 0.204 mins elapsed.
+2025-12-13 12:29:47.995023 : Adding GeneScoreMatrix to ATAC_557 for Chr (13 of 23)!, 1.088 mins elapsed.
+2025-12-13 12:29:49.243286 : Adding GeneScoreMatrix to ATAC_557 for Chr (14 of 23)!, 1.109 mins elapsed.
+2025-12-13 12:29:49.590363 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (7 of 23)!, 0.264 mins elapsed.
+2025-12-13 12:29:49.64795 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (8 of 23)!, 0.265 mins elapsed.
+2025-12-13 12:29:49.867586 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (19 of 23)!, 0.638 mins elapsed.
+2025-12-13 12:29:49.931626 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (20 of 23)!, 0.639 mins elapsed.
+2025-12-13 12:29:50.444158 : Adding GeneScoreMatrix to ATAC_557 for Chr (15 of 23)!, 1.129 mins elapsed.
+2025-12-13 12:29:52.751681 : Adding GeneScoreMatrix to ATAC_557 for Chr (16 of 23)!, 1.168 mins elapsed.
+2025-12-13 12:29:53.300267 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (9 of 23)!, 0.326 mins elapsed.
+2025-12-13 12:29:53.385345 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (10 of 23)!, 0.328 mins elapsed.
+2025-12-13 12:29:53.982464 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (21 of 23)!, 0.707 mins elapsed.
+2025-12-13 12:29:54.015816 : Adding GeneScoreMatrix to ATAC_557 for Chr (17 of 23)!, 1.189 mins elapsed.
+2025-12-13 12:29:54.040278 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (22 of 23)!, 0.708 mins elapsed.
+2025-12-13 12:29:55.248037 : Adding GeneScoreMatrix to ATAC_557 for Chr (18 of 23)!, 1.209 mins elapsed.
+2025-12-13 12:29:57.1241 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (11 of 23)!, 0.39 mins elapsed.
+2025-12-13 12:29:57.450404 : Adding GeneScoreMatrix to ATAC_557 for Chr (19 of 23)!, 1.246 mins elapsed.
+2025-12-13 12:29:57.842276 : Creating Temp GeneScoreMatrix for ATAC_555_2, Chr (23 of 23)!, 0.771 mins elapsed.
+2025-12-13 12:29:58.458973 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (12 of 23)!, 0.412 mins elapsed.
+2025-12-13 12:29:58.775242 : Adding GeneScoreMatrix to ATAC_557 for Chr (20 of 23)!, 1.268 mins elapsed.
+2025-12-13 12:29:59.797608 : Adding GeneScoreMatrix to ATAC_557 for Chr (21 of 23)!, 1.285 mins elapsed.
+2025-12-13 12:30:01.707353 : Adding GeneScoreMatrix to ATAC_557 for Chr (22 of 23)!, 1.317 mins elapsed.
+2025-12-13 12:30:01.847587 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (13 of 23)!, 0.469 mins elapsed.
+2025-12-13 12:30:02.545753 : Adding GeneScoreMatrix to ATAC_557 for Chr (23 of 23)!, 1.331 mins elapsed.
+
+2025-12-13 12:30:02.65185 : ATAC_555_2 .addGeneScoreMat FeatureDF, Class = data.frame
+ATAC_555_2 .addGeneScoreMat FeatureDF: nRows = 24919, nCols = 6
+  seqnames  start    end strand         name idx
+1     chr1  69091  70008      1        OR4F5   1
+2     chr1 140339 139790      2    LOC729737   2
+3     chr1 629010 585990      2 LOC101928626   3
+4     chr1 817371 819837      1       FAM87B   4
+5     chr1 825138 859446      1    LINC01128   5
+6     chr1 827522 826206      2    LINC00115   6
+
+
+2025-12-13 12:30:02.896556 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (14 of 23)!, 0.486 mins elapsed.
+2025-12-13 12:30:04.013774 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (1 of 23)!, 0.874 mins elapsed.
+2025-12-13 12:30:05.1156 : (ATAC_557 : 3 of 3) Finished Adding GeneScoreMatrix!, 8.202 mins elapsed.
+2025-12-13 12:30:05.116944 : (ATAC_557 : 3 of 3) Finished Creating Arrow File, 8.202 mins elapsed.
+2025-12-13 12:30:05.338492 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (2 of 23)!, 0.896 mins elapsed.
+2025-12-13 12:30:05.549173 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (15 of 23)!, 0.53 mins elapsed.
+2025-12-13 12:30:06.372374 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (3 of 23)!, 0.913 mins elapsed.
+2025-12-13 12:30:06.547892 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (16 of 23)!, 0.547 mins elapsed.
+2025-12-13 12:30:08.104055 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (4 of 23)!, 0.942 mins elapsed.
+2025-12-13 12:30:08.730582 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (17 of 23)!, 0.583 mins elapsed.
+2025-12-13 12:30:09.141012 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (5 of 23)!, 0.959 mins elapsed.
+2025-12-13 12:30:09.971074 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (18 of 23)!, 0.604 mins elapsed.
+2025-12-13 12:30:10.221594 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (6 of 23)!, 0.977 mins elapsed.
+2025-12-13 12:30:11.932368 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (7 of 23)!, 1.006 mins elapsed.
+2025-12-13 12:30:12.472744 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (19 of 23)!, 0.646 mins elapsed.
+2025-12-13 12:30:12.919713 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (8 of 23)!, 1.022 mins elapsed.
+2025-12-13 12:30:13.080246 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (20 of 23)!, 0.656 mins elapsed.
+2025-12-13 12:30:13.829669 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (9 of 23)!, 1.038 mins elapsed.
+2025-12-13 12:30:15.468814 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (10 of 23)!, 1.065 mins elapsed.
+2025-12-13 12:30:15.758991 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (21 of 23)!, 0.701 mins elapsed.
+2025-12-13 12:30:16.201535 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (22 of 23)!, 0.708 mins elapsed.
+2025-12-13 12:30:16.432528 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (11 of 23)!, 1.081 mins elapsed.
+2025-12-13 12:30:17.510074 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (12 of 23)!, 1.099 mins elapsed.
+2025-12-13 12:30:18.912818 : Creating Temp GeneScoreMatrix for ATAC_HIP02_frozen, Chr (23 of 23)!, 0.753 mins elapsed.
+2025-12-13 12:30:19.337219 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (13 of 23)!, 1.129 mins elapsed.
+2025-12-13 12:30:20.081716 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (14 of 23)!, 1.142 mins elapsed.
+2025-12-13 12:30:20.857515 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (15 of 23)!, 1.155 mins elapsed.
+
+2025-12-13 12:30:21.845369 : ATAC_HIP02_frozen .addGeneScoreMat FeatureDF, Class = data.frame
+ATAC_HIP02_frozen .addGeneScoreMat FeatureDF: nRows = 24919, nCols = 6
+  seqnames  start    end strand         name idx
+1     chr1  69091  70008      1        OR4F5   1
+2     chr1 140339 139790      2    LOC729737   2
+3     chr1 629010 585990      2 LOC101928626   3
+4     chr1 817371 819837      1       FAM87B   4
+5     chr1 825138 859446      1    LINC01128   5
+6     chr1 827522 826206      2    LINC00115   6
+
+
+2025-12-13 12:30:22.055649 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (16 of 23)!, 1.175 mins elapsed.
+2025-12-13 12:30:22.701631 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (1 of 23)!, 0.816 mins elapsed.
+2025-12-13 12:30:22.804369 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (17 of 23)!, 1.187 mins elapsed.
+2025-12-13 12:30:23.571734 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (18 of 23)!, 1.2 mins elapsed.
+2025-12-13 12:30:24.668025 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (2 of 23)!, 0.849 mins elapsed.
+2025-12-13 12:30:24.739153 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (19 of 23)!, 1.219 mins elapsed.
+2025-12-13 12:30:25.47064 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (20 of 23)!, 1.232 mins elapsed.
+2025-12-13 12:30:26.169801 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (21 of 23)!, 1.243 mins elapsed.
+2025-12-13 12:30:26.243007 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (3 of 23)!, 0.875 mins elapsed.
+2025-12-13 12:30:27.229996 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (22 of 23)!, 1.261 mins elapsed.
+2025-12-13 12:30:27.913987 : Adding GeneScoreMatrix to ATAC_555_2 for Chr (23 of 23)!, 1.272 mins elapsed.
+2025-12-13 12:30:28.195467 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (4 of 23)!, 0.908 mins elapsed.
+2025-12-13 12:30:29.392566 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (5 of 23)!, 0.928 mins elapsed.
+2025-12-13 12:30:29.59904 : (ATAC_555_2 : 2 of 3) Finished Adding GeneScoreMatrix!, 8.61 mins elapsed.
+2025-12-13 12:30:29.600113 : (ATAC_555_2 : 2 of 3) Finished Creating Arrow File, 8.61 mins elapsed.
+2025-12-13 12:30:30.009053 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (6 of 23)!, 0.938 mins elapsed.
+2025-12-13 12:30:30.985538 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (7 of 23)!, 0.954 mins elapsed.
+2025-12-13 12:30:31.503414 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (8 of 23)!, 0.963 mins elapsed.
+2025-12-13 12:30:32.02301 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (9 of 23)!, 0.972 mins elapsed.
+2025-12-13 12:30:33.003993 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (10 of 23)!, 0.988 mins elapsed.
+2025-12-13 12:30:34.109169 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (11 of 23)!, 1.006 mins elapsed.
+2025-12-13 12:30:35.3442 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (12 of 23)!, 1.027 mins elapsed.
+2025-12-13 12:30:36.972183 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (13 of 23)!, 1.054 mins elapsed.
+2025-12-13 12:30:37.8026 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (14 of 23)!, 1.068 mins elapsed.
+2025-12-13 12:30:38.764375 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (15 of 23)!, 1.084 mins elapsed.
+2025-12-13 12:30:40.160274 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (16 of 23)!, 1.107 mins elapsed.
+2025-12-13 12:30:41.142467 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (17 of 23)!, 1.124 mins elapsed.
+2025-12-13 12:30:42.306229 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (18 of 23)!, 1.143 mins elapsed.
+2025-12-13 12:30:43.536645 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (19 of 23)!, 1.163 mins elapsed.
+2025-12-13 12:30:44.713958 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (20 of 23)!, 1.183 mins elapsed.
+2025-12-13 12:30:45.565632 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (21 of 23)!, 1.197 mins elapsed.
+2025-12-13 12:30:46.724334 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (22 of 23)!, 1.217 mins elapsed.
+2025-12-13 12:30:47.511374 : Adding GeneScoreMatrix to ATAC_HIP02_frozen for Chr (23 of 23)!, 1.23 mins elapsed.
+2025-12-13 12:30:48.953858 : (ATAC_HIP02_frozen : 1 of 3) Finished Adding GeneScoreMatrix!, 8.932 mins elapsed.
+2025-12-13 12:30:48.954886 : (ATAC_HIP02_frozen : 1 of 3) Finished Creating Arrow File, 8.932 mins elapsed.
+
+------- Completed
+
+End Time : 2025-12-13 12:30:48.998576
+Elapsed Time Minutes = 8.93358091115952
+Elapsed Time Hours = 0.14889387468497
+
+-------
+
+
+

@@ -1,0 +1,28 @@
+{
+    "id": "B355575E",
+    "path": null,
+    "project_path": null,
+    "type": "object_explorer",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1765631136986.0,
+    "source_on_save": false,
+    "relative_order": 3,
+    "properties": {
+        "id": "60d580cff6ae41bcbe8941efc4713132",
+        "name": "ArrowFiles_paths",
+        "title": "ArrowFiles_paths",
+        "language": "R",
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 3467824627879785504,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1765631136986,
+    "read_only": false,
+    "read_only_alternatives": []
+}

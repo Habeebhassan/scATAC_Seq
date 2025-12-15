@@ -1,0 +1,190 @@
+---
+title: "Project 2: scATAC-seq Analysis Report"
+author: "[Your Name]"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+# Week 1: Preprocessing and Quality Control
+
+## 1.1 Set up the environment
+The analysis environment was set up using R and the **ArchR** software package. [cite_start]The reference genome for the project was set to **'hg38'** (GRCh38) to ensure all subsequent mapping and analysis aligns with the standard human genome assembly[cite: 30].
+
+## 1.2 Read the data and apply filtering
+Fragment files from three replicates were read into ArchR Arrow files. We applied **lenient filtering** thresholds during this initial import to retain as much data as possible for quality inspection:
+
+* **Fragments:** Minimum 500 fragments per cell[cite: 33].
+* [cite_start]**TSS Enrichment:** Minimum score of 4[cite: 33].
+* [cite_start]**Tiling:** A genome-wide tiling matrix was computed using 500 bp windows[cite: 34].
+
+## 1.3 Identify doublets
+Doublet identification was performed using ArchR's simulation-based approach. Synthetic doublets were generated to model the doublet phenotype, and a doublet score was assigned to each cell. [cite_start]These identified doublets were subsequently filtered out of the project dataset[cite: 38].
+
+## 1.4 Joint Data Structure and Metadata Inspection
+All samples were collected into a single ArchR Project. Post-filtering statistics were calculated to assess the dataset dimensions and quality.
+
+**Statistics Report:**
+
+* **Total Cells:** 8,057 cells are included in the project.
+* [cite_start]**Median TSS Enrichment:** 9.556[cite: 42].
+* **Median Number of Fragments:** 3,775[cite: 42].
+* [cite_start]**Dimension of Tile Set:** 6,062,095 tiles (rows) x 8,057 cells (columns)[cite: 43].
+
+## 1.5 Quality Control
+
+### 1. Cell Counts per Sample
+
+[cite_start]**Question: How many cells do you have for each sample?** [cite: 46]
+
+Based on the initial processing and filtering, the cell counts for the three replicates are as follows:
+
+* **ATAC_555_2:** 1,212 cells
+* **ATAC_557:** 844 cells
+* **ATAC_HIP02_frozen:** 6,001 cells
+
+*Observation:* The sample `ATAC_HIP02_frozen` yields significantly more cells than the other two replicates, contributing approximately 75% of the total dataset.
+
+### 2. Fragment Length Distribution
+
+**Question: Plot the fragment length distribution of all samples in a single plot.** [cite: 47]
+
+```{r fragment-size-plot, echo=FALSE, out.width="80%", fig.align='center', fig.cap="Fragment Size Distribution and TSS Insertion Profile"}
+# Note: This PDF contains the Fragment Size plot (Page 1) and TSS Profile (Page 2)
+knitr::include_graphics("Task1_5_QC_Report1.pdf")```
+
+Question: Explain the biological significance of the periodicity observed in the fragment length distribution. 
+
+The plot displays the characteristic periodic pattern expected in high-quality ATAC-seq libraries. This pattern reflects the nucleosome positioning on the chromatin:
+
+Peak < 100 bp (Nucleosome-Free Region): The highest peak (far left) corresponds to DNA fragments from open chromatin regions where no nucleosomes are present. These regions are accessible to TFs and the Tn5 transposase.
+
+
+Peak ~ 200 bp (Mono-nucleosome): The second peak represents DNA fragments that were wrapped around a single histone octamer (approx. 147 bp + linker DNA).
+
+
+Peak ~ 400 bp (Di-nucleosome): The smaller third bump represents fragments spanning two adjacent nucleosomes.
+
+Physical Interpretation: This periodicity confirms that the transposition reaction successfully occurred in the linker DNA between nucleosomes, preserving the chromatin structure information. The three samples (Red, Blue, Green lines) show nearly identical distributions, indicating consistent library preparation quality across all replicates.
+
+3. TSS Enrichment Scores
+
+Question: Plot the distribution of TSS enrichment scores in each sample. 
+
+(Refer to Page 2 of the embedded QC Report PDF above for the TSS Profile)
+
+The TSS enrichment profile shows a strong, clean peak centered at 0 bp (the Transcription Start Site), with enrichment scores reaching approximately 10-12.5x over background. This indicates a high signal-to-noise ratio, as reads are correctly clustering at gene promoters.
+
+4. Fragments vs. TSS Enrichment
+
+Question: For each sample, plot the number of fragments vs TSS enrichments. 
+
+Code snippet
+
+knitr::include_graphics("Task1_5_TSS_Violin.pdf")
+Question: Inspect the plots and report your findings. Do you observe outlier samples/samples with low quality? 
+
+I examined the scatter plots of TSS Enrichment (Y-axis) versus Log10 Unique Fragments (X-axis) for all three samples:
+
+Overall Quality: The majority of cells in all three samples show high quality, with TSS enrichment scores largely clustered between 8 and 15, which is well above the standard cutoff of 4.
+
+Fragment Depth: The cell populations show a consistent sequencing depth, with most cells having between 10 
+3.5
+  (~3,100) and 10 
+4.3
+  (~20,000) unique fragments.
+
+Outliers:
+
+No Low-Quality Outliers: There is no significant "tail" of low-quality cells (low TSS/low fragments) visible in the plots. This suggests the initial lenient filtering was effective or the input samples were of very high quality.
+
+Sample Consistency: While ATAC_HIP02_frozen is an outlier in terms of sample size (having far more cells), its quality metrics (TSS vs. Fragments distribution) are highly consistent with ATAC_555_2 and ATAC_557. No "batch effect" related to quality is immediately apparent from these metrics alone.
+
+## 1.6 Filter the dataset
+
+Based on the QC observations in Task 1.5, where the majority of cells exhibited high TSS enrichment (>8) and robust fragment counts, we applied stricter filtering criteria to ensure only high-quality cells are retained for downstream analysis.
+
+**Filtering Parameters Applied:**
+* **TSS Enrichment Score:** $\ge 8$ (increased from 4)
+* **Number of Fragments:** $\ge 1000$ (increased from 500)
+* **Doublets:** Removed (during Task 1.4).
+
+**Updated Statistics (Revisiting Task 1.4 Questions):**
+
+* **How many cells are included in your project?**
+    * **`r format(nCells(proj), big.mark=",")`** cells (After filtering).
+* **What is the median TSS value and the median number of fragments?**
+    * **Median TSS:** `r round(median(proj$TSSEnrichment), 3)`
+    * **Median Fragments:** `r format(median(proj$nFrags), big.mark=",")`
+* **What is the dimension of the tile set in your dataset?**
+    * 6,062,095 tiles x `r format(nCells(proj), big.mark=",")` cells.
+
+## Week 2
+
+## 2.1 Peak Calling
+
+**1. Explain what you did and why this is necessary.**
+We performed peak calling using MACS2. This process identifies specific genomic regions (peaks) where chromatin is significantly accessible (open) compared to the background. This is necessary to define a set of genomic features (a "vocabulary") that can be quantified across all cells, transforming the data from raw reads into a count matrix (Peak Matrix) suitable for downstream statistical analysis.
+
+**2. Interpretation: Why is it important to call peaks on pseudo-bulked replicates rather than individual single cells or the total merged dataset?**
+
+* **Why pseudo-bulk?:** Single-cell ATAC data is binary and sparse (0 or 1). Standard peak callers like MACS2 require dense signal pile-ups to accurately identify peak summits and boundaries. Aggregating reads from similar cells ("pseudo-bulking") reconstructs this required signal density.
+
+* **Why not the total merged dataset?:** Calling peaks on all cells merged together would bias the results toward the most abundant cell types. Rare cell-type-specific peaks would be diluted by the noise of the majority and likely missed.
+
+**How does this approach help identify rare cell-type-specific elements?**
+By grouping by Sample (or Cluster), we allow peaks to be called locally. A peak that is strongly open in a rare population will be detected in that specific groups pseudo-bulk, ensuring it is retained in the final combined "Union Peak Set."
+
+## 3 Dimensionality Reduction
+
+### 3.1 Iterative LSI
+
+**1. Why do we use LSI and not only PCA for the dimensionality reduction of scATAC data?**
+scATAC-seq matrices are extremely **sparse** (mostly zeros) and binary.
+* **PCA** requires "centering" the data (subtracting the mean), which destroys the sparsity (turning zeros into non-zeros) and creates a massive dense matrix that would crash the memory (RAM).
+* **LSI** (Latent Semantic Indexing) uses TF-IDF transformation followed by SVD. It is designed for sparse data (originally text documents) and can process the matrix efficiently without destroying the zero-structure.
+
+**2. Interpretation: Inspect the correlation between LSI 1 and sequencing depth.**
+* **Correlation:** The first LSI component (LSI 1) typically has a very high correlation with sequencing depth (number of fragments).
+* **Reason for Exclusion:** This correlation indicates that LSI 1 is capturing technical variation (how deeply a cell was sequenced) rather than biological variation (chromatin state). We exclude it from downstream clustering to ensure cells define their identity based on *biology*, not technical quality.
+
+### 3.2 Dealing with Batch Effects (Pre-Correction)
+**Observation:**
+Upon inspecting the UMAP embeddings and clustering results, a significant **batch effect** was observed. The sample `ATAC_HIP02_frozen` formed completely distinct clusters separated from `ATAC_555_2` and `ATAC_557`, creating islands in the UMAP space.
+**Correction:** We applied Harmony batch correction to align the samples.
+- Result: The new UMAP (Task3_2_Harmony_UMAP.pdf) shows a successful integration, where cells from all three samples are mixed within the same clouds, indicating the technical differences have been removed.
+
+## 4. Clustering (Initial)
+
+**Clustering Statistics initial:**
+The confusion matrix below confirms the batch effect. Clusters are defined almost exclusively by the sample of origin rather than biological similarity across samples.
+
+| Cluster | Total Cells | Sample Composition |
+| :--- | :--- | :--- |
+| **C1** | 968 | Mixed (61% `555_2`, 39% `557`) |
+| **C2** | 2,591 | **100% `HIP02_frozen`** |
+| **C3** | 209 | **100% `HIP02_frozen`** |
+| **C4** | 1,884 | **100% `HIP02_frozen`** |
+| **C5** | 825 | **100% `HIP02_frozen`** |
+| **C6** | 228 | Mixed (54% `555_2`, 46% `557`) |
+| **C7** | 710 | Mixed (55% `555_2`, 45% `557`) |
+| **C8** | 150 | Mixed (69% `555_2`, 31% `557`) |
+
+**Clustering Final:** We applied Louvain clustering on the Harmony-corrected dimensions.
+**Clustering Statistics Final:**The confusion matrix below confirms the resolution of the batch effect. Unlike the initial analysis, all clusters now contain a mixture of cells from all three samples, proportional to the input library sizes.
+
+Cluster	Total Cells	Sample Composition
+C1	3,559	Mixed (17% 555_2, 11% 557, 72% HIP02)
+C2	442	Mixed (28% 555_2, 24% 557, 49% HIP02)
+C3	1,052	Mixed (13% 555_2, 10% 557, 77% HIP02)
+C4	1,114	Mixed (18% 555_2, 13% 557, 69% HIP02)
+C5	1,398	Mixed (12% 555_2, 8% 557, 80% HIP02)
+
+## 2.1 Cluster Marker Peaks
+1. **Identify cluster-specific peaks:** We identified marker peaks for each of the 5 new clusters using the Wilcoxon test (FDR ≤ 0.1, Log2FC ≥ 0.5).
+
+2. **Heatmap Interpretation:** (Refer to Task2_2_MarkerPeaks_Heatmap_Corrected.pdf) The heatmap displays the accessibility of these marker peaks across the clusters.
+
+- Distinct Patterns: We observe blocks of accessible regions (yellow) that are specific to each cluster. For example, Cluster C1 shows a unique set of open peaks that are closed (blue) in Clusters C2-C5.
+
+- Biological Meaning: These unique accessibility profiles define the identity of the cell types. The genes associated with these open regions (analyzed in Week 3) will tell us which specific cell types (e.g., T-cells, B-cells) these clusters represent.
+
